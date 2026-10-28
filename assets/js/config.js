@@ -86,7 +86,7 @@ window.CATEGORIES = [
 window.PRODUCTS = [
   {
     id: "bra-seamless", cat: "bra", featured: true, badge: "hot",
-    images: ["images/fb-seamless-bra.jpg", "images/seamless-bra.jpg"],
+    images: ["images/fb-seamless-bra.jpg"],
     name: { bn: "চায়না সিমলেস ব্রা", en: "China Seamless Bra" },
     desc: { bn: "ওয়্যার ছাড়া নরম সিমলেস ব্রা, সারাদিন আরামে পরা যায়। আমাদের মোস্ট ভাইরাল ব্রা।", en: "A soft, wire-free seamless bra you can wear comfortably all day. Our most viral bra." },
     note: { bn: "মোস্ট ভাইরাল • ২ পিস ১০৯৯ টাকা", en: "Most viral • 2 pieces for ৳1,099" },
@@ -99,7 +99,7 @@ window.PRODUCTS = [
   },
   {
     id: "bra-premium-lace", cat: "bra", featured: true, badge: "offer",
-    images: ["images/maroon-padded-bra.jpg", "images/fb-premium-lace-bra.jpg"],
+    images: ["images/maroon-padded-bra.jpg"],
     name: { bn: "প্রিমিয়াম লেস ব্রা", en: "Premium Lace Bra" },
     desc: { bn: "প্রিমিয়াম কোয়ালিটির লেস ব্রা। রেগুলার দাম ৫৯৯ টাকা, অফারে ৪৯৯ টাকা। স্টক সীমিত।", en: "Premium quality lace bra. Regular price ৳599, now ৳499 on offer. Limited stock." },
     note: { bn: "অফার ৩১ অক্টোবর পর্যন্ত • লিমিটেড স্টক", en: "Offer till 31 October • Limited stock" },
@@ -118,7 +118,7 @@ window.PRODUCTS = [
   },
   {
     id: "bra-padded", cat: "bra", featured: true,
-    images: ["images/fb-padded-bra.jpg", "images/fb-gorgeous-lace-bra.jpg", "images/padded-combo-495.jpg", "images/white-black-combo.jpg"],
+    images: ["images/fb-padded-bra.jpg", "images/fb-gorgeous-lace-bra.jpg", "images/white-black-combo.jpg"],
     name: { bn: "প্যাডেড লেস ব্রা", en: "Padded Lace Bra" },
     desc: { bn: "নরম কাপড়ের ফুল প্যাডেড ব্রা, উপরে সুন্দর লেসের কাজ। একসাথে ৩ পিস নিলে মাত্র ৪৯৫ টাকা।", en: "Fully padded bra in soft fabric with pretty lace on top. Take 3 pieces together for just ৳495." },
     note: { bn: "৩ পিস কম্বো ৪৯৫ টাকা", en: "3-piece combo ৳495" },
