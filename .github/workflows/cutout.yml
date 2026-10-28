@@ -1,0 +1,32 @@
+name: Product cut-outs
+on:
+  push:
+    branches: [photo-lab]
+    paths: ['src/**', 'cutout.py', '.github/workflows/cutout.yml']
+permissions:
+  contents: write
+jobs:
+  cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q onnxruntime opencv-python-headless numpy
+      - name: Models
+        run: |
+          for f in BiRefNet-general-epoch_244.onnx BiRefNet-general-bb_swin_v1_tiny-epoch_232.onnx; do
+            curl -fsSL -o $f https://github.com/danielgatis/rembg/releases/download/v0.0.0/$f
+          done
+          ls -la *.onnx; nproc; free -g
+      - name: Cut out (BiRefNet general)
+        run: python cutout.py general
+      - name: Save
+        if: always()
+        run: |
+          git config user.name "Blushing Beauty"
+          git config user.email "blushingbeautybd@users.noreply.github.com"
+          git add out
+          git commit -m "Cut-out masks" || exit 0
+          git push origin photo-lab
