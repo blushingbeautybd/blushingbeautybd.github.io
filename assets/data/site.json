@@ -180,7 +180,8 @@
       "id": "bra-seamless",
       "cat": "bra",
       "images": [
-        "images/fb-seamless-bra.jpg"
+        "images/fb-seamless-bra.jpg",
+        "images/seamless-bra.jpg"
       ],
       "name": {
         "bn": "চায়না সিমলেস ব্রা",
@@ -250,7 +251,8 @@
       "id": "bra-premium-lace",
       "cat": "bra",
       "images": [
-        "images/maroon-padded-bra.jpg"
+        "images/maroon-padded-bra.jpg",
+        "images/fb-premium-lace-bra.jpg"
       ],
       "name": {
         "bn": "প্রিমিয়াম লেস ব্রা",
@@ -333,6 +335,7 @@
       "images": [
         "images/fb-padded-bra.jpg",
         "images/fb-gorgeous-lace-bra.jpg",
+        "images/padded-combo-495.jpg",
         "images/white-black-combo.jpg"
       ],
       "name": {
