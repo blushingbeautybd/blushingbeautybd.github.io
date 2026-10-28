@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Blushing Beauty | Lingerie, Beauty & You</title>
+  <meta name="description" content="Blushing Beauty: bras, panties, lingerie sets, nightwear and beauty care. Home delivery across Bangladesh, cash on delivery, easy ordering on WhatsApp.">
+  <meta name="theme-color" content="#FBF7F4">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blushing Beauty | Comfort That Hugs You Back">
+  <meta property="og:description" content="Bras, panties, lingerie sets and nightwear. Home delivery across Bangladesh.">
+  <meta property="og:image" content="images/hero-1.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    "name": "Blushing Beauty",
+    "image": "images/logo.png",
+    "telephone": "+8801684287215",
+    "openingHours": "Mo-Su 00:00-23:59",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Arabari Madrasah Road, Konapara",
+      "addressLocality": "Jatrabari, Dhaka",
+      "postalCode": "1229",
+      "addressCountry": "BD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#shop" data-i18n="skip">Skip to products</a>
+
+  <!-- ================= HEADER ================= -->
+  <header class="hdr" id="top">
+    <div class="wrap hdr-row">
+      <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-controls="mainNav" aria-expanded="false" aria-label="Menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <a class="logo" href="#top" aria-label="Blushing Beauty">
+        <img src="images/logo.webp" alt="" width="60" height="60">
+        <span class="logo-text">
+          <span class="logo-word">Blushing Beauty</span>
+          <span class="logo-sub">Lingerie <i>|</i> Beauty <i>|</i> You</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="mainNav" aria-label="Main">
+        <div class="nav-head">
+          <span class="logo-word">Blushing Beauty</span>
+          <button type="button" class="icon-btn" id="navClose" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        <a href="#top" data-spy="top" data-i18n="nav.home">Home</a>
+        <div class="nav-drop">
+          <button type="button" class="nav-drop-btn" id="shopDropBtn" aria-expanded="false" aria-controls="shopDrop">
+            <span data-i18n="nav.shop">Shop</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="drop" id="shopDrop"></div>
+        </div>
+        <a href="#offers" data-spy="offers" data-i18n="nav.offers">Offers</a>
+        <a href="#about" data-spy="about" data-i18n="nav.about">About Us</a>
+        <a href="#contact" data-spy="contact" data-i18n="nav.contact">Contact</a>
+        <div class="nav-lang lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">English</button>
+          <button type="button" data-lang="bn" aria-pressed="false">বাংলা</button>
+        </div>
+      </nav>
+
+      <div class="hdr-icons">
+        <div class="lang hdr-lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="bn" aria-pressed="false">বাং</button>
+        </div>
+        <button type="button" class="icon-btn" id="searchBtn" aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        </button>
+        <button type="button" class="icon-btn" id="wishOpen" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20Z"/></svg>
+          <span class="count" id="wishCount">0</span>
+        </button>
+        <button type="button" class="icon-btn" id="cartOpen" aria-label="Cart">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8h13l-1 12h-11l-1-12Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+          <span class="count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-scrim" id="navScrim" hidden></div>
+
+  <main>
+    <!-- ================= HERO SLIDER ================= -->
+    <section class="hero" id="hero" aria-roledescription="carousel" aria-label="Highlights">
+      <div class="slides" id="slides"></div>
+      <button type="button" class="hero-arrow prev" id="heroPrev" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+      </button>
+      <button type="button" class="hero-arrow next" id="heroNext" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+      </button>
+      <div class="hero-dots" id="heroDots"></div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section class="features" aria-label="Why shop with us">
+      <ul class="wrap feat-row" role="list">
+        <li><span class="feat-ico"><svg viewBox="0 0 24 24"><path d="M2.5 7h11v9h-11zM13.5 10h4l3 3v3h-7"/><circle cx="6.5" cy="17.5" r="1.7"/><circle cx="17" cy="17.5" r="1.7"/></svg></span>
+          <span><b data-i18n="feat.t1">Home Delivery</b><small data-i18n="feat.s1">Across Bangladesh</small></span></li>
+        <li><span class="feat-ico"><svg viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="11" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/></svg></span>
+          <span><b data-i18n="feat.t2">Cash on Delivery</b><small data-i18n="feat.s2">Pay when you receive</small></span></li>
+        <li><span class="feat-ico"><svg viewBox="0 0 24 24"><path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18M9 4l3 16M15 4l-3 16"/></svg></span>
+          <span><b data-i18n="feat.t3">Premium Quality</b><small data-i18n="feat.s3">Carefully selected</small></span></li>
+        <li><span class="feat-ico"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20Z"/></svg></span>
+          <span><b data-i18n="feat.t4">Comfort Fit</b><small data-i18n="feat.s4">All day comfort</small></span></li>
+        <li><span class="feat-ico"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19 19c0 1.5-2 2.5-5 2.5"/></svg></span>
+          <span><b data-i18n="feat.t5">Customer Support</b><small data-i18n="feat.s5">Always here on WhatsApp</small></span></li>
+        <li><span class="feat-ico"><svg viewBox="0 0 24 24"><path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2M10 8l2 2M13 5l2 2"/></svg></span>
+          <span><b data-i18n="feat.t6">Size Help</b><small data-i18n="feat.s6">We'll find your fit</small></span></li>
+      </ul>
+    </section>
+
+    <!-- ================= COLLECTIONS ================= -->
+    <section class="sec collections" id="categories" aria-labelledby="catsTitle">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow" data-i18n="cats.eyebrow">Shop by Category</p>
+          <h2 class="sec-title" id="catsTitle"><span data-i18n="cats.title">Explore Our Collections</span></h2>
+        </div>
+        <div class="cat-tiles" id="catTiles"></div>
+      </div>
+    </section>
+
+    <!-- ================= OFFERS ================= -->
+    <section class="sec offers" id="offers" aria-labelledby="offersTitle">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow" data-i18n="offers.eyebrow">Best Deals</p>
+          <h2 class="sec-title" id="offersTitle"><span data-i18n="offers.title">Combo Offers</span></h2>
+          <p class="sec-sub" data-i18n="offers.sub"></p>
+        </div>
+        <div class="rail-wrap">
+          <button type="button" class="rail-arrow prev" data-rail="-1" aria-label="Previous">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+          </button>
+          <div class="rail" id="offerRail"></div>
+          <button type="button" class="rail-arrow next" data-rail="1" aria-label="Next">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SHOP ================= -->
+    <section class="sec shop" id="shop" aria-labelledby="shopTitle">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow" data-i18n="shop.eyebrow">Shop All</p>
+          <h2 class="sec-title" id="shopTitle"><span data-i18n="shop.title">Our Collection</span></h2>
+          <p class="sec-sub" data-i18n="shop.sub"></p>
+        </div>
+        <div class="toolbar">
+          <label class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <span class="sr" data-i18n="shop.search">Search products</span>
+            <input type="search" id="search" autocomplete="off" data-i18n-ph="shop.searchPh" placeholder="Search products">
+          </label>
+          <label class="sort">
+            <span class="sr" data-i18n="shop.sort">Sort</span>
+            <select id="sort">
+              <option value="default" data-i18n="sort.default">Featured</option>
+              <option value="low" data-i18n="sort.low">Price: low to high</option>
+              <option value="high" data-i18n="sort.high">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" id="chips" role="tablist" aria-label="Categories"></div>
+        <p class="result-count" id="resultCount" aria-live="polite"></p>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="about" id="about" aria-labelledby="aboutTitle">
+      <div class="about-row">
+        <div class="about-img"><img src="images/about-gift.jpg" alt="" loading="lazy"></div>
+        <div class="about-copy">
+          <p class="eyebrow" data-i18n="about.eyebrow">About Blushing Beauty</p>
+          <h2 id="aboutTitle" data-i18n="about.title">More Than Just Lingerie</h2>
+          <p data-i18n="about.p1"></p>
+          <p class="about-more" id="aboutMore" hidden data-i18n="about.p2"></p>
+          <ul class="about-feats" role="list">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c8 0 14-6 14-14C11 5 5 11 5 19Zm0 0 7-7"/></svg><span data-i18n="about.f1">Premium Quality</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20Z"/></svg><span data-i18n="about.f2">Comfort Fit</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18M9 4l3 16M15 4l-3 16"/></svg><span data-i18n="about.f3">Elegant Designs</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M5 18 3.5 8l5 3.5L12 5l3.5 6.5 5-3.5L19 18"/></svg><span data-i18n="about.f4">Women Empowerment</span></li>
+          </ul>
+          <button type="button" class="btn btn-berry btn-sm" id="storyBtn" aria-expanded="false" aria-controls="aboutMore">
+            <span data-i18n="about.cta">Our Story</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="about-model">
+          <img src="images/about-model.jpg" alt="" loading="lazy">
+          <p class="about-script" aria-hidden="true">Confidence<br>Looks Good<br>On You <span class="heart">♡</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= REVIEWS (real reviews only, added from admin) ================= -->
+    <section class="sec reviews" id="reviews" aria-labelledby="revTitle" hidden>
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="sec-title sec-title-sm" id="revTitle"><span data-i18n="rev.title">What Our Customers Say</span></h2>
+        </div>
+        <div class="rail-wrap">
+          <button type="button" class="rail-arrow prev round" data-rail="-1" aria-label="Previous">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+          </button>
+          <div class="rail rev-rail" id="revRail"></div>
+          <button type="button" class="rail-arrow next round" data-rail="1" aria-label="Next">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SIZE GUIDE ================= -->
+    <section class="sec size" id="size" aria-labelledby="sizeTitle">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow" data-i18n="size.eyebrow">Find Your Fit</p>
+          <h2 class="sec-title" id="sizeTitle"><span data-i18n="size.title">Size Guide</span></h2>
+        </div>
+        <div class="size-grid">
+          <div class="size-copy">
+            <ol class="measure" role="list">
+              <li><b class="num">1</b><p data-i18n="size.p1"></p></li>
+              <li><b class="num">2</b><p data-i18n="size.p2"></p></li>
+            </ol>
+            <p class="size-help" data-i18n="size.help"></p>
+            <a class="btn btn-outline btn-sm" href="#" data-wa-size data-i18n="size.ask">Ask about sizes on WhatsApp</a>
+          </div>
+          <table>
+            <caption data-i18n="size.bandCap">Bra size</caption>
+            <thead><tr><th data-i18n="size.under">Underbust (inches)</th><th data-i18n="size.band">Size</th></tr></thead>
+            <tbody>
+              <tr><td class="num">27 – 28</td><td class="num">32</td></tr>
+              <tr><td class="num">29 – 30</td><td class="num">34</td></tr>
+              <tr><td class="num">31 – 32</td><td class="num">36</td></tr>
+              <tr><td class="num">33 – 34</td><td class="num">38</td></tr>
+              <tr><td class="num">35 – 36</td><td class="num">40</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <caption data-i18n="size.cupCap">Cup size</caption>
+            <thead><tr><th data-i18n="size.diff">Difference</th><th data-i18n="size.cup">Cup</th></tr></thead>
+            <tbody>
+              <tr><td class="num" data-i18n="size.d1"></td><td>A</td></tr>
+              <tr><td class="num" data-i18n="size.d2"></td><td>B</td></tr>
+              <tr><td class="num" data-i18n="size.d3"></td><td>C</td></tr>
+              <tr><td class="num" data-i18n="size.d4"></td><td>D</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HOW TO ORDER ================= -->
+    <section class="sec how" id="how" aria-labelledby="howTitle">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow" data-i18n="how.eyebrow">Easy Ordering</p>
+          <h2 class="sec-title" id="howTitle"><span data-i18n="how.title">How to Order</span></h2>
+        </div>
+        <ol class="steps" role="list">
+          <li><span class="step-n num">1</span><h3 data-i18n="how.s1t"></h3><p data-i18n="how.s1"></p></li>
+          <li><span class="step-n num">2</span><h3 data-i18n="how.s2t"></h3><p data-i18n="how.s2"></p></li>
+          <li><span class="step-n num">3</span><h3 data-i18n="how.s3t"></h3><p data-i18n="how.s3"></p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= FAQ + CONTACT ================= -->
+    <section class="sec contact" id="contact" aria-labelledby="contactTitle">
+      <div class="wrap contact-grid">
+        <div class="faq">
+          <p class="eyebrow" data-i18n="faq.eyebrow">Questions</p>
+          <h2 class="h2-left" data-i18n="faq.title">Frequently Asked</h2>
+          <details><summary data-i18n="faq.q1"></summary><p data-i18n="faq.a1"></p></details>
+          <details><summary data-i18n="faq.q2"></summary><p data-i18n="faq.a2"></p></details>
+          <details><summary data-i18n="faq.q3"></summary><p data-i18n="faq.a3"></p></details>
+          <details><summary data-i18n="faq.q4"></summary><p data-i18n="faq.a4"></p></details>
+          <details><summary data-i18n="faq.q5"></summary><p data-i18n="faq.a5"></p></details>
+        </div>
+        <div class="visit">
+          <p class="eyebrow" data-i18n="contact.eyebrow">Get in Touch</p>
+          <h2 class="h2-left" id="contactTitle" data-i18n="contact.title">Contact Us</h2>
+          <ul class="contact-list" role="list">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span class="js-addr"></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><a class="js-phone" href="#"></a></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="contact.always">Always open</span></li>
+          </ul>
+          <div class="contact-actions">
+            <a class="btn btn-berry js-wa" href="#">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="wa-ico"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.6 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.1.1-.2.3 0 .5.5.9 1.3 1.7 2.3 2.2.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .5-.2 1.3-.9 1.6-.6.3-1.5.4-3.6-.6-2.4-1.2-3.8-3.6-3.9-3.8-.1-.2-.9-1.2-.9-2.3 0-1 .5-1.5.7-1.8Z" class="wa-dot"/></svg>
+              <span data-i18n="contact.wa">Message us on WhatsApp</span>
+            </a>
+          </div>
+          <div class="map"><iframe id="mapFrame" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="ftr">
+    <svg class="ftr-leaf" viewBox="0 0 200 200" aria-hidden="true"><path d="M190 190C120 160 80 110 60 30M60 30c-20 20-24 50-6 70M60 30c26 12 40 40 30 64M80 70c-26 6-40 30-32 52M80 70c24 2 44 22 42 46M104 112c-24 8-34 30-26 50M104 112c22-2 42 14 46 36M128 146c-16 10-20 28-12 42M128 146c18-4 34 6 40 22"/></svg>
+    <div class="wrap">
+      <div class="ftr-cols">
+        <div class="ftr-brand">
+          <img src="images/logo.webp" alt="" width="64" height="64">
+          <div>
+            <p class="logo-word">Blushing Beauty</p>
+            <p class="logo-sub">Lingerie <i>|</i> Beauty <i>|</i> You</p>
+          </div>
+        </div>
+        <nav class="ftr-col" aria-label="Quick links">
+          <h3 data-i18n="foot.links">Quick Links</h3>
+          <a href="#top" data-i18n="nav.home">Home</a>
+          <a href="#shop" data-i18n="nav.shop">Shop</a>
+          <a href="#about" data-i18n="nav.about">About Us</a>
+          <a href="#size" data-i18n="foot.size">Size Guide</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+        <div class="ftr-col">
+          <h3 data-i18n="foot.follow">Follow Us</h3>
+          <div class="socials" id="socials"></div>
+        </div>
+        <div class="ftr-col ftr-contact">
+          <h3 data-i18n="contact.title">Contact Us</h3>
+          <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span class="js-addr"></span></p>
+          <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><a class="js-phone" href="#"></a></p>
+        </div>
+      </div>
+      <div class="ftr-base">
+        <p>© <span id="year">2026</span> Blushing Beauty. <span data-i18n="foot.rights">All rights reserved.</span></p>
+        <p class="ftr-script" aria-hidden="true">Soft <i>•</i> Beautiful <i>•</i> You <span class="heart">♡</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="preview-flag" id="previewFlag" hidden data-i18n="preview.flag">Preview</div>
+
+  <a class="wa-float js-wa" href="#" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"/><path d="M8.6 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.2 0 .4-.1.6l-.5.6c-.1.1-.2.3 0 .5.5.9 1.3 1.7 2.3 2.2.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .5-.2 1.3-.9 1.6-.6.3-1.5.4-3.6-.6-2.4-1.2-3.8-3.6-3.9-3.8-.1-.2-.9-1.2-.9-2.3 0-1 .5-1.5.7-1.8Z" class="wa-dot"/></svg>
+  </a>
+
+  <button type="button" class="cart-bar" id="cartBar" hidden>
+    <span id="cartBarText"></span>
+    <span class="cart-bar-go" data-i18n="cart.view">View cart</span>
+  </button>
+
+  <!-- Product -->
+  <dialog class="sheet product-sheet" id="productDialog" aria-labelledby="pdName">
+    <form method="dialog" class="sheet-close-row">
+      <button class="icon-btn close-btn" value="close" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </form>
+    <div class="pd" id="pdBody"></div>
+  </dialog>
+
+  <!-- Cart -->
+  <dialog class="sheet drawer" id="cartDialog" aria-labelledby="cartTitle">
+    <div class="drawer-head">
+      <h2 id="cartTitle" data-i18n="cart.title">Your Cart</h2>
+      <form method="dialog"><button class="icon-btn close-btn" value="close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+    </div>
+    <div class="drawer-body" id="cartBody"></div>
+  </dialog>
+
+  <!-- Wishlist -->
+  <dialog class="sheet drawer" id="wishDialog" aria-labelledby="wishTitle">
+    <div class="drawer-head">
+      <h2 id="wishTitle" data-i18n="wish.title">Your Wishlist</h2>
+      <form method="dialog"><button class="icon-btn close-btn" value="close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+    </div>
+    <div class="drawer-body" id="wishBody"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/cloud-config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

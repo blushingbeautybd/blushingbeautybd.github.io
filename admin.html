@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>অ্যাডমিন | Blushing Beauty</title>
+  <meta name="theme-color" content="#2A0914">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700&family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Tiro+Bangla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/admin-base.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin">
+  <header class="a-top">
+    <div class="wrap a-top-row">
+      <a class="a-brand" href="index.html" target="_blank" rel="noopener">
+        <img src="images/logo.webp" alt="" width="40" height="40">
+        <span><b>Blushing Beauty</b><small>অ্যাডমিন প্যানেল</small></span>
+      </a>
+      <span class="mode-pill" id="modePill"></span>
+      <div class="a-top-actions">
+        <a class="btn btn-ghost btn-sm" id="previewBtn" href="index.html?preview=1" target="_blank" rel="noopener">সাইট প্রিভিউ</a>
+        <button type="button" class="btn btn-ghost btn-sm" id="logoutBtn" hidden>লগআউট</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap a-main">
+    <!-- Login (cloud mode) -->
+    <section id="loginView" class="a-login" hidden>
+      <form id="loginForm" class="a-card" novalidate>
+        <img src="images/logo.webp" alt="" width="72" height="72" class="a-login-logo">
+        <h1>অ্যাডমিন লগইন</h1>
+        <p class="a-muted">শুধু দোকানের মালিক লগইন করতে পারবেন।</p>
+        <label class="a-field"><span>ইমেইল</span><input type="email" name="email" autocomplete="username" required></label>
+        <label class="a-field"><span>পাসওয়ার্ড</span><input type="password" name="password" autocomplete="current-password" required></label>
+        <p class="form-err" id="loginErr" role="alert"></p>
+        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">লগইন করুন</button>
+      </form>
+    </section>
+
+    <!-- Loading / error -->
+    <section id="loadView" class="a-load" hidden>
+      <div class="a-spinner" aria-hidden="true"></div>
+      <p id="loadText">ডেটা লোড হচ্ছে…</p>
+      <button type="button" class="btn btn-primary btn-sm" id="retryBtn" hidden>আবার চেষ্টা করুন</button>
+    </section>
+
+    <!-- Main app -->
+    <section id="appView" hidden>
+      <div class="a-note" id="localNote" hidden>
+        <b>লোকাল মোড চালু আছে।</b>
+        পরিবর্তনগুলো শুধু এই ব্রাউজারে সেভ থাকে। সব কাস্টমারকে দেখাতে নিচের বার থেকে <b>config.js</b> ডাউনলোড করে হোস্টিং এ <code>assets/js/config.js</code> ফাইলটা বদলে দিন।
+        সরাসরি লাইভ সেভ চাইলে "ব্যাকআপ ও সেটআপ" ট্যাবে Supabase সেটআপ দেখুন।
+      </div>
+
+      <nav class="a-tabs" role="tablist" aria-label="Admin sections">
+        <button type="button" role="tab" data-tab="products" aria-selected="true">পণ্য <span class="a-tab-n" id="countAll"></span></button>
+        <button type="button" role="tab" data-tab="home" aria-selected="false">হোমপেজ</button>
+        <button type="button" role="tab" data-tab="settings" aria-selected="false">সেটিংস</button>
+        <button type="button" role="tab" data-tab="backup" aria-selected="false">ব্যাকআপ ও সেটআপ</button>
+      </nav>
+
+      <!-- PRODUCTS -->
+      <div class="a-panel" data-panel="products">
+        <div class="a-toolbar">
+          <label class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <span class="sr">পণ্য খুঁজুন</span>
+            <input type="search" id="aSearch" placeholder="পণ্য খুঁজুন" autocomplete="off">
+          </label>
+          <button type="button" class="btn btn-primary" id="addProduct">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            নতুন পণ্য
+          </button>
+        </div>
+        <div class="chips a-filters" id="aFilters" role="tablist" aria-label="Filter"></div>
+        <p class="a-hint">দাম সরাসরি ঘরে লিখে দিন। ঘর খালি রাখলে সাইটে "দাম জানুন" দেখাবে। সব শেষে নিচের বার থেকে পাবলিশ করুন।</p>
+        <ul class="a-list" id="aList" role="list"></ul>
+      </div>
+
+      <!-- HOMEPAGE: hero slides + reviews -->
+      <div class="a-panel" data-panel="home" hidden>
+        <div id="homePanel"></div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="a-panel" data-panel="settings" hidden>
+        <form class="a-card a-form" id="settingsForm" novalidate></form>
+      </div>
+
+      <!-- BACKUP + SETUP -->
+      <div class="a-panel" data-panel="backup" hidden>
+        <div class="a-card a-form">
+          <h2>ব্যাকআপ</h2>
+          <p class="a-muted">সব পণ্য আর সেটিংস একটা ফাইলে রেখে দিন। পরে এখান থেকেই ফিরিয়ে আনা যাবে।</p>
+          <div class="a-btnrow">
+            <button type="button" class="btn btn-ghost btn-sm" id="exportJson">ব্যাকআপ ডাউনলোড</button>
+            <label class="btn btn-ghost btn-sm a-filebtn">ব্যাকআপ থেকে ফিরিয়ে আনুন<input type="file" id="importJson" accept="application/json,.json" hidden></label>
+          </div>
+        </div>
+
+        <div class="a-card a-form">
+          <h2>config.js ফাইল</h2>
+          <p class="a-muted">এখনকার সব পণ্য আর সেটিংস দিয়ে নতুন <code>config.js</code> তৈরি হবে। হোস্টিং এ <code>assets/js/config.js</code> এর জায়গায় এটা রাখলে সাইটে দেখাবে। ক্লাউড মোডেও এটা রাখা ভালো, ক্লাউড বন্ধ থাকলে সাইট এটা দেখায়।</p>
+          <div class="a-btnrow">
+            <button type="button" class="btn btn-primary btn-sm" id="exportConfig">config.js ডাউনলোড</button>
+            <button type="button" class="btn btn-line btn-sm" id="resetDefaults">config.js এর পণ্যে ফিরে যান</button>
+          </div>
+        </div>
+
+        <div class="a-card a-form" id="setupCard">
+          <h2>লাইভ সেভ (Supabase) সেটআপ</h2>
+          <p class="a-status" id="cloudStatus"></p>
+          <ol class="a-steps">
+            <li><a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> এ ফ্রি অ্যাকাউন্ট খুলে একটা নতুন প্রজেক্ট বানান।</li>
+            <li>SQL Editor খুলে <code>supabase-setup.sql</code> ফাইলের সব লেখা পেস্ট করে Run চাপুন।</li>
+            <li>Authentication থেকে Users এ গিয়ে Add user দিয়ে নিজের ইমেইল আর পাসওয়ার্ড দিন। তারপর Sign In / Providers এ নতুন সাইন আপ বন্ধ করে দিন।</li>
+            <li>Project Settings থেকে API তে গিয়ে Project URL আর anon public key কপি করে <code>assets/js/cloud-config.js</code> ফাইলে বসান।</li>
+            <li>সাইট আবার আপলোড করে এই পেজে লগইন করুন। এরপর প্রতিটা পাবলিশ সাথে সাথে সবার কাছে লাইভ হবে।</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Save bar -->
+  <div class="savebar" id="saveBar" hidden>
+    <div class="wrap savebar-row">
+      <p id="saveText"></p>
+      <div class="savebar-btns">
+        <button type="button" class="btn btn-outline-light btn-sm" id="discardBtn">বাতিল</button>
+        <button type="button" class="btn btn-light btn-sm" id="publishBtn">পাবলিশ করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product editor -->
+  <dialog class="sheet a-editor" id="editor" aria-labelledby="edTitle">
+    <form id="edForm" novalidate>
+      <div class="ed-head">
+        <h2 id="edTitle">পণ্য এডিট</h2>
+        <button type="button" class="icon-btn" data-ed-close aria-label="বন্ধ করুন">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="ed-body" id="edBody"></div>
+      <div class="ed-foot">
+        <button type="button" class="btn btn-line btn-sm" id="edDelete">মুছে ফেলুন</button>
+        <span class="ed-spacer"></span>
+        <button type="button" class="btn btn-ghost btn-sm" data-ed-close>বাতিল</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="edSave">ঠিক আছে</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Confirm -->
+  <dialog class="sheet a-confirm" id="confirmDlg" aria-labelledby="confirmText">
+    <div class="a-confirm-body">
+      <p id="confirmText"></p>
+      <div class="a-btnrow">
+        <button type="button" class="btn btn-ghost btn-sm" id="confirmNo">না</button>
+        <button type="button" class="btn btn-primary btn-sm" id="confirmYes">হ্যাঁ</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/cloud-config.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
