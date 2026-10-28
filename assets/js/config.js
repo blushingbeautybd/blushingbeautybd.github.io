@@ -117,12 +117,15 @@ window.PRODUCTS = [
     sizes: "bra"
   },
   {
-    id: "bra-padded", cat: "bra",
-    images: ["images/fb-padded-bra.jpg", "images/white-black-combo.jpg"],
-    name: { bn: "প্যাডেড ব্রা", en: "Padded Bra" },
-    desc: { bn: "নরম কটন কাপড়ের ফুল প্যাডেড ব্রা। পাঁচটা রঙে পাওয়া যায়।", en: "Fully padded bra in soft cotton fabric, in five colours." },
-    note: { bn: "ফুল প্যাডেড • নরম কটন", en: "Fully padded • Soft cotton" },
-    options: [{ id: "1pc", label: { bn: "১ পিস", en: "Single piece" }, price: 165 }],
+    id: "bra-padded", cat: "bra", featured: true,
+    images: ["images/fb-padded-bra.jpg", "images/fb-gorgeous-lace-bra.jpg", "images/padded-combo-495.jpg", "images/white-black-combo.jpg"],
+    name: { bn: "প্যাডেড লেস ব্রা", en: "Padded Lace Bra" },
+    desc: { bn: "নরম কাপড়ের ফুল প্যাডেড ব্রা, উপরে সুন্দর লেসের কাজ। একসাথে ৩ পিস নিলে মাত্র ৪৯৫ টাকা।", en: "Fully padded bra in soft fabric with pretty lace on top. Take 3 pieces together for just ৳495." },
+    note: { bn: "৩ পিস কম্বো ৪৯৫ টাকা", en: "3-piece combo ৳495" },
+    options: [
+      { id: "1pc", label: { bn: "১ পিস", en: "Single piece" }, price: 165 },
+      { id: "3pc", label: { bn: "৩ পিস কম্বো", en: "3-piece combo" }, price: 495 }
+    ],
     sizes: ["32", "34", "36", "38", "40", "42"],
     colors: [{ bn: "কালো", en: "Black" }, { bn: "সাদা", en: "White" }, { bn: "গোলাপি", en: "Pink" }, { bn: "মেরুন", en: "Maroon" }, { bn: "লাল", en: "Red" }]
   },
@@ -134,18 +137,6 @@ window.PRODUCTS = [
     note: { bn: "১ ব্রা + ১ প্যান্টি", en: "1 bra + 1 panty" },
     options: [{ id: "set", label: { bn: "সেট", en: "Set" }, price: 350 }],
     sizes: "bra"
-  },
-  {
-    id: "bra-gorgeous-lace", cat: "bra", featured: true,
-    images: ["images/fb-gorgeous-lace-bra.jpg", "images/padded-combo-495.jpg"],
-    name: { bn: "গর্জিয়াস লেস ব্রা", en: "Gorgeous Lace Bra" },
-    desc: { bn: "সুন্দর লেসের কাজ করা প্যাডেড ব্রা। ৩ পিস একসাথে নিলে মাত্র ৪৯৫ টাকা।", en: "Padded bra with pretty lace work. Take 3 pieces together for just ৳495." },
-    note: { bn: "৩ পিস কম্বো ৪৯৫ টাকা", en: "3-piece combo ৳495" },
-    options: [
-      { id: "1pc", label: { bn: "১ পিস", en: "Single piece" }, price: 165 },
-      { id: "3pc", label: { bn: "৩ পিস কম্বো", en: "3-piece combo" }, price: 495 }
-    ],
-    sizes: ["32", "34", "36", "38"]
   },
   {
     id: "night-4pc", cat: "night", featured: false,
