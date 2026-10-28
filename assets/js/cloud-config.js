@@ -13,6 +13,11 @@
    ========================================================= */
 
 window.CLOUD = {
+  /* GitHub mode (used by blushingbeautybd.github.io): admin.html publishes
+     straight into this repository with the owner's GitHub token. */
+  github: { owner: "blushingbeautybd", repo: "blushingbeautybd.github.io", branch: "main" },
+
+  /* Supabase mode (only used when github above is removed) */
   supabaseUrl: "",
   supabaseAnonKey: ""
 };

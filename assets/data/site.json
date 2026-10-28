@@ -1,0 +1,803 @@
+{
+  "settings": {
+    "name": "Blushing Beauty",
+    "whatsapp": "8801684287215",
+    "phoneDisplay": "+880 1684-287215",
+    "phoneTel": "+8801684287215",
+    "facebookUrl": "",
+    "messengerUrl": "",
+    "address": {
+      "bn": "আরাবাড়ি মাদ্রাসা রোড, কোনাপাড়া, যাত্রাবাড়ী, ঢাকা ১২২৯",
+      "en": "Arabari Madrasah Road, Konapara, Jatrabari, Dhaka 1229"
+    },
+    "mapQuery": "Konapara, Jatrabari, Dhaka 1229",
+    "delivery": [
+      {
+        "id": "inside",
+        "label": {
+          "bn": "ঢাকার ভিতরে",
+          "en": "Inside Dhaka"
+        },
+        "fee": 80
+      },
+      {
+        "id": "outside",
+        "label": {
+          "bn": "ঢাকার বাইরে",
+          "en": "Outside Dhaka"
+        },
+        "fee": 130
+      }
+    ],
+    "braSizes": [
+      "32",
+      "34",
+      "36",
+      "38",
+      "40"
+    ],
+    "instagramUrl": "",
+    "tiktokUrl": "",
+    "youtubeUrl": "",
+    "defaultLang": "en",
+    "banners": [
+      {
+        "id": "b1",
+        "image": "images/hero-1.jpg",
+        "imageMobile": "images/hero-1-mobile.jpg",
+        "collage": "",
+        "label": {
+          "bn": "প্রিমিয়াম লঞ্জেরি ও বিউটি",
+          "en": "Premium Lingerie & Beauty Essentials"
+        },
+        "title": {
+          "bn": "Blushing Beauty",
+          "en": "Blushing Beauty"
+        },
+        "sub": {
+          "bn": "নরম • আরামদায়ক • প্রিমিয়াম কোয়ালিটি",
+          "en": "Soft • Breathable • Premium Quality"
+        },
+        "cta": {
+          "bn": "এখনই কিনুন",
+          "en": "Shop Now"
+        },
+        "script": "Comfort That Hugs You Back",
+        "aside": "Because You Deserve the Best",
+        "link": "#shop"
+      },
+      {
+        "id": "b2",
+        "image": "",
+        "imageMobile": "",
+        "collage": "combo",
+        "label": {
+          "bn": "কম্বো অফার",
+          "en": "Combo Offers"
+        },
+        "title": {
+          "bn": "বেশি নিন, কম দিন",
+          "en": "Buy More, Save More"
+        },
+        "sub": {
+          "bn": "একসাথে কয়েক পিস নিলে প্রতি পিসের দাম কমে যায়",
+          "en": "Take a few pieces together and pay less for each one"
+        },
+        "cta": {
+          "bn": "অফার দেখুন",
+          "en": "See Offers"
+        },
+        "script": "Love in Every Piece",
+        "aside": "",
+        "link": "cat:combo"
+      },
+      {
+        "id": "b3",
+        "image": "",
+        "imageMobile": "",
+        "collage": "night",
+        "label": {
+          "bn": "নাইট ড্রেস",
+          "en": "Nightwear"
+        },
+        "title": {
+          "bn": "সাটিন নাইট ড্রেস",
+          "en": "Satin Nights"
+        },
+        "sub": {
+          "bn": "আরামের ঘুমের জন্য নরম সাটিন সেট",
+          "en": "Soft satin sets for restful nights"
+        },
+        "cta": {
+          "bn": "নাইট ড্রেস দেখুন",
+          "en": "Shop Nightwear"
+        },
+        "script": "Sweet Dreams, Pretty You",
+        "aside": "",
+        "link": "cat:night"
+      }
+    ],
+    "reviews": [],
+    "categories": [
+      {
+        "id": "bra",
+        "label": {
+          "bn": "ব্রা",
+          "en": "Bras"
+        },
+        "image": "images/cat-bras.jpg",
+        "icon": "bra"
+      },
+      {
+        "id": "panty",
+        "label": {
+          "bn": "প্যান্টি",
+          "en": "Panties"
+        },
+        "image": "images/cat-panties.jpg",
+        "icon": "panty"
+      },
+      {
+        "id": "set",
+        "label": {
+          "bn": "লঞ্জেরি সেট",
+          "en": "Lingerie Sets"
+        },
+        "image": "images/cat-sets.jpg",
+        "icon": "set"
+      },
+      {
+        "id": "night",
+        "label": {
+          "bn": "নাইট ড্রেস",
+          "en": "Nightwear"
+        },
+        "image": "images/cat-nightwear.jpg",
+        "icon": "dress"
+      },
+      {
+        "id": "combo",
+        "label": {
+          "bn": "কম্বো অফার",
+          "en": "Combo Offers"
+        },
+        "image": "images/cat-gift.jpg",
+        "icon": "gift"
+      },
+      {
+        "id": "beauty",
+        "label": {
+          "bn": "বিউটি কেয়ার",
+          "en": "Beauty Care"
+        },
+        "image": "images/cat-beauty.jpg",
+        "icon": "bow"
+      }
+    ]
+  },
+  "products": [
+    {
+      "id": "combo-3-padded",
+      "cat": "combo",
+      "images": [
+        "images/white-black-combo.jpg",
+        "images/padded-combo-495.jpg"
+      ],
+      "name": {
+        "bn": "৩ পিস প্যাডেড ব্রা কম্বো",
+        "en": "3-piece padded bra combo"
+      },
+      "desc": {
+        "bn": "প্যাডেড ব্রা, সাইজ ৩২ থেকে। তিন পিস একসাথে নিলে ৪৯৫ টাকা, এক পিস নিলেও মাত্র ১৬৫ টাকা।",
+        "en": "Padded bras from size 32. Take all three for ৳495, or a single piece for ৳165."
+      },
+      "note": {
+        "bn": "প্রতি পিস ১৬৫ টাকা",
+        "en": "৳165 per piece"
+      },
+      "options": [
+        {
+          "id": "3pc",
+          "label": {
+            "bn": "৩ পিস কম্বো",
+            "en": "3-piece combo"
+          },
+          "price": 495,
+          "oldPrice": null
+        },
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 165,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": true,
+      "active": true,
+      "inStock": true,
+      "badge": "hot"
+    },
+    {
+      "id": "combo-4-rose",
+      "cat": "combo",
+      "images": [
+        "images/rose-print-combo.jpg"
+      ],
+      "name": {
+        "bn": "৪ পিস রোজ প্রিন্ট ব্রা কম্বো",
+        "en": "4-piece rose print bra combo"
+      },
+      "desc": {
+        "bn": "রোজ প্রিন্টের ব্রা, ৪ পিসের কম্বো মাত্র ৪৮০ টাকা। প্রতি পিস পড়ছে ১২০ টাকা।",
+        "en": "Rose print bras. A 4-piece combo for ৳480, which is ৳120 per piece."
+      },
+      "note": {
+        "bn": "প্রতি পিস ১২০ টাকা",
+        "en": "৳120 per piece"
+      },
+      "options": [
+        {
+          "id": "4pc",
+          "label": {
+            "bn": "৪ পিস কম্বো",
+            "en": "4-piece combo"
+          },
+          "price": 480,
+          "oldPrice": null
+        },
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 120,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": true,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "combo-4-floral",
+      "cat": "combo",
+      "images": [
+        "images/peach-cotton-combo.jpg"
+      ],
+      "name": {
+        "bn": "৪ পিস ফ্লোরাল প্রিন্ট ব্রা কম্বো",
+        "en": "4-piece floral print bra combo"
+      },
+      "desc": {
+        "bn": "ছোট ফুলের প্রিন্টের ব্রা, ৪ পিসের কম্বো ৫৮০ টাকা। প্রতি পিস ১৪৫ টাকা।",
+        "en": "Bras with a small floral print. A 4-piece combo for ৳580, ৳145 per piece."
+      },
+      "note": {
+        "bn": "প্রতি পিস ১৪৫ টাকা",
+        "en": "৳145 per piece"
+      },
+      "options": [
+        {
+          "id": "4pc",
+          "label": {
+            "bn": "৪ পিস কম্বো",
+            "en": "4-piece combo"
+          },
+          "price": 580,
+          "oldPrice": null
+        },
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 145,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": true,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "set-black-lace",
+      "cat": "set",
+      "images": [
+        "images/black-lace-set.jpg"
+      ],
+      "name": {
+        "bn": "ব্ল্যাক লেস ব্রা + প্যান্টি সেট",
+        "en": "Black lace bra + panty set"
+      },
+      "desc": {
+        "bn": "লেস ডিজাইনের ব্রা আর প্রিন্টেড প্যান্টি, পুরো সেট মাত্র ৩৫০ টাকা।",
+        "en": "A lace bra with a printed panty. The full set is ৳350."
+      },
+      "note": {
+        "bn": "পুরো সেট",
+        "en": "Full set"
+      },
+      "options": [
+        {
+          "id": "set",
+          "label": {
+            "bn": "সেট",
+            "en": "Set"
+          },
+          "price": 350,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": true,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "set-pink-lace",
+      "cat": "set",
+      "images": [
+        "images/pink-lace-set.jpg"
+      ],
+      "name": {
+        "bn": "পিংক লেস ব্রা + প্যান্টি সেট",
+        "en": "Pink lace bra + panty set"
+      },
+      "desc": {
+        "bn": "পিংক কালারের লেস ব্রা আর প্যান্টির কম্বো, মাত্র ৩৫০ টাকা।",
+        "en": "A pink lace bra and matching panty, ৳350 for the pair."
+      },
+      "note": {
+        "bn": "পুরো সেট",
+        "en": "Full set"
+      },
+      "options": [
+        {
+          "id": "set",
+          "label": {
+            "bn": "সেট",
+            "en": "Set"
+          },
+          "price": 350,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "bra-like-me",
+      "cat": "bra",
+      "images": [
+        "images/like-me-bra-99.jpg"
+      ],
+      "name": {
+        "bn": "লাইক মি ব্রা",
+        "en": "Like Me bra"
+      },
+      "desc": {
+        "bn": "অফার প্রাইস, প্রতি পিস মাত্র ৯৯ টাকা।",
+        "en": "Offer price: ৳99 per piece."
+      },
+      "note": {
+        "bn": "অফার প্রাইস",
+        "en": "Offer price"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 99,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": "offer"
+    },
+    {
+      "id": "bra-printed",
+      "cat": "bra",
+      "images": [
+        "images/heart-print-combo.jpg"
+      ],
+      "name": {
+        "bn": "প্রিমিয়াম প্রিন্টেড ব্রা",
+        "en": "Premium printed bra"
+      },
+      "desc": {
+        "bn": "প্রিমিয়াম প্রিন্টেড ব্রা কালেকশন, প্রতি পিস ১১০ টাকা। কয়েকটি ডিজাইনে পাওয়া যাচ্ছে।",
+        "en": "Premium printed bra collection at ৳110 per piece, in several prints."
+      },
+      "note": {
+        "bn": "কয়েকটি প্রিন্টে",
+        "en": "Several prints"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 110,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "bra-padded-premium",
+      "cat": "bra",
+      "images": [
+        "images/maroon-padded-bra.jpg"
+      ],
+      "name": {
+        "bn": "প্রিমিয়াম প্যাডেড ব্রা",
+        "en": "Premium padded bra"
+      },
+      "desc": {
+        "bn": "রেগুলার প্রাইস ৫৯৯ টাকা, এখন অফারে মাত্র ৪৯৯ টাকা।",
+        "en": "Regular price ৳599, now ৳499 on offer."
+      },
+      "note": {
+        "bn": "অফারে ১০০ টাকা কম",
+        "en": "৳100 off"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 499,
+          "oldPrice": 599
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": "offer"
+    },
+    {
+      "id": "bra-china-seamless",
+      "cat": "bra",
+      "images": [
+        "images/seamless-bra.jpg"
+      ],
+      "name": {
+        "bn": "চায়না ইম্পোর্টেড সিমলেস ব্রা",
+        "en": "China imported seamless bra"
+      },
+      "desc": {
+        "bn": "চায়না ইম্পোর্টেড সফট ব্রা, ১ পিস ৫৯৯ টাকা।",
+        "en": "Soft China imported bra, ৳599 per piece."
+      },
+      "note": {
+        "bn": "চায়না ইম্পোর্টেড",
+        "en": "China imported"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 599,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "bra-china-original",
+      "cat": "bra",
+      "images": [
+        "images/china-imported-bra.jpg"
+      ],
+      "name": {
+        "bn": "অরিজিনাল চায়না ইম্পোর্টেড ব্রা",
+        "en": "Original China imported bra"
+      },
+      "desc": {
+        "bn": "অনেকগুলো কালারে পাওয়া যাচ্ছে, স্টক সীমিত। দাম ও কালার জানতে মেসেজ করুন।",
+        "en": "Available in many colours, limited stock. Message us for price and colours."
+      },
+      "note": {
+        "bn": "স্টক সীমিত",
+        "en": "Limited stock"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "bra-mom",
+      "cat": "bra",
+      "images": [
+        "images/mom-bra.jpg"
+      ],
+      "name": {
+        "bn": "মম / ফিডিং ব্রা",
+        "en": "Mom / feeding bra"
+      },
+      "desc": {
+        "bn": "চায়না ইম্পোর্টেড মম ব্রা, যাকে ফিডিং ব্রা-ও বলা হয়। দাম ও কালার জানতে মেসেজ করুন।",
+        "en": "China imported mom bra, also called a feeding bra. Message us for price and colours."
+      },
+      "note": {
+        "bn": "চায়না ইম্পোর্টেড",
+        "en": "China imported"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "bra-sports",
+      "cat": "bra",
+      "images": [
+        "images/sports-bra.jpg"
+      ],
+      "name": {
+        "bn": "স্পোর্টস ব্রা",
+        "en": "Sports bra"
+      },
+      "desc": {
+        "bn": "চায়না ইম্পোর্টেড স্পোর্টস ব্রা। দাম ও সাইজ জানতে মেসেজ করুন।",
+        "en": "China imported sports bra. Message us for price and sizes."
+      },
+      "note": {
+        "bn": "চায়না ইম্পোর্টেড",
+        "en": "China imported"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "bra-pink-lace",
+      "cat": "bra",
+      "images": [
+        "images/pink-lace-bra.jpg"
+      ],
+      "name": {
+        "bn": "পিংক লেস ব্রা",
+        "en": "Pink lace bra"
+      },
+      "desc": {
+        "bn": "নরম পিংক লেসের ব্রা। দাম ও সাইজ জানতে মেসেজ করুন।",
+        "en": "Soft pink lace bra. Message us for price and sizes."
+      },
+      "note": {
+        "bn": "লেস ডিজাইন",
+        "en": "Lace"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": "bra",
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "panty-red-lace",
+      "cat": "panty",
+      "images": [
+        "images/red-lace-panty.jpg"
+      ],
+      "name": {
+        "bn": "রেড লেস প্যান্টি",
+        "en": "Red lace panty"
+      },
+      "desc": {
+        "bn": "লেসের প্যান্টি, ১ পিস মাত্র ১৩৯ টাকা।",
+        "en": "Lace panty, ৳139 per piece."
+      },
+      "note": {
+        "bn": "লেস ডিজাইন",
+        "en": "Lace"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": 139,
+          "oldPrice": null
+        }
+      ],
+      "sizes": null,
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "night-navy",
+      "cat": "night",
+      "images": [
+        "images/night-dress-navy.jpg"
+      ],
+      "name": {
+        "bn": "সাটিন নাইট ড্রেস সেট (নেভি)",
+        "en": "Satin nightwear set (navy)"
+      },
+      "desc": {
+        "bn": "সুন্দর সাটিন নাইট ড্রেস সেট। দাম ও সাইজ জানতে মেসেজ করুন।",
+        "en": "A satin nightwear set. Message us for price and sizes."
+      },
+      "note": {
+        "bn": "সাটিন",
+        "en": "Satin"
+      },
+      "options": [
+        {
+          "id": "set",
+          "label": {
+            "bn": "সেট",
+            "en": "Set"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": null,
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "night-ivory",
+      "cat": "night",
+      "images": [
+        "images/night-dress-ivory.jpg"
+      ],
+      "name": {
+        "bn": "সাটিন নাইট ড্রেস সেট (আইভরি)",
+        "en": "Satin nightwear set (ivory)"
+      },
+      "desc": {
+        "bn": "সুন্দর সাটিন নাইট ড্রেস সেট। দাম ও সাইজ জানতে মেসেজ করুন।",
+        "en": "A satin nightwear set. Message us for price and sizes."
+      },
+      "note": {
+        "bn": "সাটিন",
+        "en": "Satin"
+      },
+      "options": [
+        {
+          "id": "set",
+          "label": {
+            "bn": "সেট",
+            "en": "Set"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": null,
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    },
+    {
+      "id": "cream-yogurt",
+      "cat": "beauty",
+      "images": [
+        "images/yogurt-cream.jpg"
+      ],
+      "name": {
+        "bn": "ম্যাজিক হোয়াইট ইয়োগার্ট মিল্ক আন্ডারআর্ম ক্রিম",
+        "en": "Magic White Yogurt Milk underarm cream"
+      },
+      "desc": {
+        "bn": "আন্ডারআর্মের যত্নে ৭ ইন ১ ফর্মুলার ক্রিম, পিংক কালারের সহজে ব্যবহারযোগ্য প্যাকেজিং। স্টক ও দাম জানতে মেসেজ করুন।",
+        "en": "A 7-in-1 underarm care cream in an easy-to-use pink tube. Message us for price and stock."
+      },
+      "note": {
+        "bn": "৭ ইন ১",
+        "en": "7 in 1"
+      },
+      "options": [
+        {
+          "id": "1pc",
+          "label": {
+            "bn": "১ পিস",
+            "en": "Single piece"
+          },
+          "price": null,
+          "oldPrice": null
+        }
+      ],
+      "sizes": null,
+      "featured": false,
+      "active": true,
+      "inStock": true,
+      "badge": ""
+    }
+  ]
+}

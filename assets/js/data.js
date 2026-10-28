@@ -1,6 +1,8 @@
 /* Blushing Beauty — data layer shared by the shop (app.js) and admin (admin.js)
-   Cloud mode: Supabase table "site_content" (rows "products" and "settings")
-   Local mode: defaults from config.js, admin drafts in this browser only      */
+   GitHub mode:   admin publishes straight into the site's GitHub repo
+                  (assets/data/site.json + assets/js/config.js + uploaded images)
+   Supabase mode: table "site_content" (rows "products" and "settings")
+   Local mode:    defaults from config.js, admin drafts in this browser only      */
 (function () {
   "use strict";
 
@@ -11,8 +13,17 @@
   var DRAFT_KEY = "bb_admin_draft_v1";
 
   var CLOUD = window.CLOUD || {};
-  var cloudOn = !!(CLOUD.supabaseUrl && CLOUD.supabaseAnonKey);
+  var GH = CLOUD.github && CLOUD.github.owner && CLOUD.github.repo ? CLOUD.github : null;
+  var ghOn = !!GH;
+  var supaOn = !ghOn && !!(CLOUD.supabaseUrl && CLOUD.supabaseAnonKey);
+  var cloudOn = ghOn || supaOn;
+  var backend = ghOn ? "github" : supaOn ? "supabase" : "local";
   var client = null, clientP = null;
+
+  var TOKEN_KEY = "bb_gh_token_v1";
+  var DATA_PATH = "assets/data/site.json";
+  var CONFIG_PATH = "assets/js/config.js";
+  var IMG_DIR = "images/u/";
 
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
   function ls(key, val) {
@@ -169,6 +180,122 @@
     });
   }
 
+  /* ---------- github ---------- */
+  function ghBranch() { return GH.branch || "main"; }
+  function repoPath(p) { return "/repos/" + encodeURIComponent(GH.owner) + "/" + encodeURIComponent(GH.repo) + (p || ""); }
+  function gh(path, opts) {
+    opts = opts || {};
+    var token = opts.token || ls(TOKEN_KEY);
+    var headers = { "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
+    if (token) headers.Authorization = "Bearer " + token;
+    if (opts.body) headers["Content-Type"] = "application/json";
+    return fetch("https://api.github.com" + path, {
+      method: opts.method || "GET", headers: headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined, cache: "no-store"
+    }).then(function (r) {
+      return r.text().then(function (txt) {
+        var j = null; try { j = txt ? JSON.parse(txt) : null; } catch (e) {}
+        if (!r.ok) { var err = new Error((j && j.message) || ("GitHub " + r.status)); err.status = r.status; throw err; }
+        return j;
+      });
+    });
+  }
+  function b64ToUtf8(b64) {
+    var bin = atob(String(b64).replace(/\s/g, "")), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function utf8ToB64(str) {
+    var bytes = new TextEncoder().encode(str), bin = "";
+    for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function sha1Hex(str) {
+    return crypto.subtle.digest("SHA-1", new TextEncoder().encode(str)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+    });
+  }
+  function ghReadData() {
+    return gh(repoPath("/contents/" + DATA_PATH + "?ref=" + encodeURIComponent(ghBranch()))).then(function (f) {
+      if (f && f.content) return JSON.parse(b64ToUtf8(f.content));
+      return gh(repoPath("/git/blobs/" + f.sha)).then(function (b) { return JSON.parse(b64ToUtf8(b.content)); });
+    });
+  }
+  // every "data:image/..." string inside the data becomes a file in images/u/
+  function materialize(data) {
+    var found = {};
+    (function walk(v) {
+      if (typeof v === "string") { if (/^data:image\//.test(v)) found[v] = null; }
+      else if (Array.isArray(v)) v.forEach(walk);
+      else if (v && typeof v === "object") Object.keys(v).forEach(function (k) { walk(v[k]); });
+    })(data);
+    var urls = Object.keys(found);
+    return Promise.all(urls.map(function (u) {
+      var mime = (u.match(/^data:image\/([a-z0-9+.-]+)/i) || [])[1] || "jpeg";
+      var ext = mime === "png" ? ".png" : mime === "webp" ? ".webp" : ".jpg";
+      return sha1Hex(u).then(function (h) { found[u] = IMG_DIR + h.slice(0, 20) + ext; });
+    })).then(function () {
+      var files = {};
+      urls.forEach(function (u) { files[found[u]] = u.slice(u.indexOf(",") + 1); });
+      (function swap(o) {
+        if (Array.isArray(o)) o.forEach(function (v, i) { if (typeof v === "string" && found[v]) o[i] = found[v]; else swap(v); });
+        else if (o && typeof o === "object") Object.keys(o).forEach(function (k) {
+          var v = o[k];
+          if (typeof v === "string" && found[v]) o[k] = found[v]; else swap(v);
+        });
+      })(data);
+      return files;
+    });
+  }
+  // one commit with all files; files = { path: base64 }
+  function ghCommit(files, message) {
+    var br = ghBranch(), who = { name: "Blushing Beauty Admin", email: GH.owner + "@users.noreply.github.com" };
+    return gh(repoPath("/git/ref/heads/" + br)).then(function (ref) {
+      var head = ref.object.sha;
+      return gh(repoPath("/git/commits/" + head)).then(function (c) {
+        var paths = Object.keys(files), out = [], chain = Promise.resolve();
+        paths.forEach(function (path) {
+          chain = chain.then(function () {
+            return gh(repoPath("/git/blobs"), { method: "POST", body: { content: files[path], encoding: "base64" } })
+              .then(function (b) { out.push({ path: path, mode: "100644", type: "blob", sha: b.sha }); });
+          });
+        });
+        return chain
+          .then(function () { return gh(repoPath("/git/trees"), { method: "POST", body: { base_tree: c.tree.sha, tree: out } }); })
+          .then(function (t) { return gh(repoPath("/git/commits"), { method: "POST", body: { message: message, tree: t.sha, parents: [head], author: who, committer: who } }); })
+          .then(function (nc) { return gh(repoPath("/git/refs/heads/" + br), { method: "PATCH", body: { sha: nc.sha } }); });
+      });
+    });
+  }
+  function ghPublish(data) {
+    var clean = normalize(data);
+    return materialize(clean).then(function (files) {
+      clean = normalize(clean);
+      files[DATA_PATH] = utf8ToB64(JSON.stringify(clean, null, 2) + "\n");
+      files[CONFIG_PATH] = utf8ToB64(configFile(clean, "Published from admin.html"));
+      var msg = "Update shop from admin (" + new Date().toISOString().slice(0, 16).replace("T", " ") + ")";
+      return ghCommit(files, msg).catch(function (e) {
+        // someone else published at the same moment: try once more on top of it
+        if (e.status === 409 || e.status === 422) return ghCommit(files, msg);
+        throw e;
+      });
+    }).then(function () { return clean; });
+  }
+  function ghCheckToken(token) {
+    return gh(repoPath(""), { token: token }).then(function (repo) {
+      if (repo && repo.permissions && repo.permissions.push === false) { var e = new Error("no-push"); e.status = 403; throw e; }
+      return { token: true };
+    });
+  }
+  // raw.githubusercontent serves a just-published image before GitHub Pages has redeployed
+  function displaySrc(src) {
+    src = String(src || "");
+    if (ghOn && src.indexOf(IMG_DIR) === 0) {
+      return "https://raw.githubusercontent.com/" + GH.owner + "/" + GH.repo + "/" + ghBranch() + "/" + src;
+    }
+    return src;
+  }
+
   /* ---------- shop ---------- */
   // Resolves fast with the best data available. If newer cloud data shows up
   // after a cached render, onFresh(data) is called.
@@ -177,7 +304,19 @@
       var draft = ls(DRAFT_KEY);
       if (draft) return Promise.resolve({ data: normalize(draft), source: "preview" });
     }
-    if (!cloudOn) return Promise.resolve({ data: normalize(null), source: "defaults" });
+    if (ghOn) {
+      var base = normalize(null);
+      if (onFresh && window.fetch) {
+        withTimeout(fetch(DATA_PATH + "?t=" + Date.now(), { cache: "no-store" }).then(function (r) {
+          if (!r.ok) throw new Error(r.status); return r.json();
+        }), 7000).then(function (raw) {
+          var d = normalize(raw);
+          if (JSON.stringify(d) !== JSON.stringify(base)) onFresh(d);
+        }).catch(function () {});
+      }
+      return Promise.resolve({ data: base, source: "defaults" });
+    }
+    if (!supaOn) return Promise.resolve({ data: normalize(null), source: "defaults" });
 
     var cache = ls(CACHE_KEY);
     var fresh = withTimeout(fetchCloud(), 7000).then(function (raw) {
@@ -198,6 +337,13 @@
 
   /* ---------- admin ---------- */
   function loadForAdmin() {
+    if (ghOn) {
+      return ghReadData().then(function (raw) { return { data: normalize(raw), source: "cloud" }; })
+        .catch(function (e) {
+          if (e.status === 404) return { data: normalize(null), source: "defaults" };
+          throw e;
+        });
+    }
     if (!cloudOn) {
       var draft = ls(DRAFT_KEY);
       return Promise.resolve({ data: normalize(draft), source: draft ? "draft" : "defaults" });
@@ -211,6 +357,7 @@
   function clearDraft() { return ls(DRAFT_KEY, null); }
 
   function publish(data) {
+    if (ghOn) return ghPublish(data);
     var clean = normalize(data);
     return getClient().then(function (c) {
       var now = new Date().toISOString();
@@ -236,25 +383,41 @@
     });
   }
 
+  function signInToken(token) {
+    token = String(token || "").trim();
+    if (!token) return Promise.reject(new Error("empty"));
+    return ghCheckToken(token).then(function (s) { ls(TOKEN_KEY, token); return s; });
+  }
   function signIn(email, password) {
     return getClient().then(function (c) { return c.auth.signInWithPassword({ email: email, password: password }); })
       .then(function (res) { if (res.error) throw res.error; return res.data.session; });
   }
   function getSession() {
+    if (ghOn) {
+      var tk = ls(TOKEN_KEY);
+      if (!tk) return Promise.resolve(null);
+      return ghCheckToken(tk).catch(function (e) {
+        if (e.status === 401 || e.status === 403 || e.status === 404) { ls(TOKEN_KEY, null); return null; }
+        throw e;
+      });
+    }
     return getClient().then(function (c) { return c.auth.getSession(); })
       .then(function (res) { return res && res.data ? res.data.session : null; });
   }
-  function signOut() { return getClient().then(function (c) { return c.auth.signOut(); }); }
+  function signOut() {
+    if (ghOn) { ls(TOKEN_KEY, null); return Promise.resolve(); }
+    return getClient().then(function (c) { return c.auth.signOut(); });
+  }
 
   /* ---------- config.js export (local mode) ---------- */
-  function configFile(data) {
+  function configFile(data, how) {
     var d = normalize(data);
     var s = clone(d.settings);
     var cats = s.categories; delete s.categories;
     return [
       "/* Blushing Beauty — shop settings and products",
-      "   Exported from admin.html on " + new Date().toISOString().slice(0, 16).replace("T", " "),
-      "   Replace assets/js/config.js with this file and upload the site again. */",
+      "   " + (how || "Exported from admin.html") + " on " + new Date().toISOString().slice(0, 16).replace("T", " ") + " (UTC)",
+      how ? "   Edit products from admin.html; changes here are overwritten on the next publish. */" : "   Replace assets/js/config.js with this file and upload the site again. */",
       "",
       "window.SHOP = " + JSON.stringify(s, null, 2) + ";",
       "",
@@ -266,7 +429,7 @@
   }
 
   window.BB = {
-    cloudOn: cloudOn,
+    cloudOn: cloudOn, backend: backend, github: GH, displaySrc: displaySrc, signInToken: signInToken,
     clone: clone, ls: ls, num: num, uid: uid, bl: bl,
     defaults: defaults, normalize: normalize, normProduct: normProduct, normBanner: normBanner, normReview: normReview, ICONS: ICONS,
     loadForStore: loadForStore, loadForAdmin: loadForAdmin,

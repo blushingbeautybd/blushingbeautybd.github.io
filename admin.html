@@ -35,8 +35,25 @@
         <img src="images/logo.webp" alt="" width="72" height="72" class="a-login-logo">
         <h1>অ্যাডমিন লগইন</h1>
         <p class="a-muted">শুধু দোকানের মালিক লগইন করতে পারবেন।</p>
-        <label class="a-field"><span>ইমেইল</span><input type="email" name="email" autocomplete="username" required></label>
-        <label class="a-field"><span>পাসওয়ার্ড</span><input type="password" name="password" autocomplete="current-password" required></label>
+        <div id="emailLogin">
+          <label class="a-field"><span>ইমেইল</span><input type="email" name="email" autocomplete="username"></label>
+          <label class="a-field"><span>পাসওয়ার্ড</span><input type="password" name="password" autocomplete="current-password"></label>
+        </div>
+        <div id="tokenLogin" hidden>
+          <label class="a-field"><span>GitHub টোকেন</span><input type="password" name="token" autocomplete="off" spellcheck="false" placeholder="github_pat_..."></label>
+          <details class="a-help">
+            <summary>টোকেন কোথায় পাবো?</summary>
+            <ol>
+              <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub এ নতুন টোকেন</a> খুলুন (Fine-grained token)।</li>
+              <li>Token name: <b>Blushing Beauty admin</b>, Expiration: <b>1 বছর</b> (৩৬৬ দিন)।</li>
+              <li>Resource owner: <b>blushingbeautybd</b></li>
+              <li>Repository access: <b>Only select repositories</b> → <b>blushingbeautybd.github.io</b></li>
+              <li>Permissions → Repository permissions → <b>Contents: Read and write</b></li>
+              <li><b>Generate token</b> চেপে টোকেনটা কপি করে এখানে পেস্ট করুন।</li>
+            </ol>
+            <p>টোকেন শুধু এই ব্রাউজারে থাকে। কাউকে দেবেন না, আর অন্যের কম্পিউটারে লগইন করলে কাজ শেষে লগআউট করুন।</p>
+          </details>
+        </div>
         <p class="form-err" id="loginErr" role="alert"></p>
         <button type="submit" class="btn btn-primary btn-block" id="loginBtn">লগইন করুন</button>
       </form>

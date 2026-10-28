@@ -58,13 +58,18 @@
   }
   function setMode() {
     var pill = $("#modePill");
+    var isGh = BB.backend === "github";
     pill.className = "mode-pill " + (BB.cloudOn ? "is-cloud" : "is-local");
-    pill.textContent = BB.cloudOn ? "ক্লাউড: লাইভ সেভ" : "লোকাল মোড";
+    pill.textContent = isGh ? "লাইভ: GitHub" : BB.cloudOn ? "ক্লাউড: লাইভ সেভ" : "লোকাল মোড";
     $("#localNote").hidden = BB.cloudOn;
     $("#publishBtn").textContent = BB.cloudOn ? "পাবলিশ করুন" : "config.js ডাউনলোড";
-    $("#cloudStatus").innerHTML = BB.cloudOn
+    $("#cloudStatus").innerHTML = isGh
+      ? "<b>GitHub এ কানেক্টেড।</b> পাবলিশ করলে ১-২ মিনিটের মধ্যে সাইটে দেখাবে। Supabase সেটআপের দরকার নেই।"
+      : BB.cloudOn
       ? "<b>কানেক্টেড।</b> পাবলিশ করলে সাথে সাথে সাইটে দেখাবে।"
       : "<b>এখনো কানেক্ট করা হয়নি।</b> নিচের ধাপগুলো একবার করলেই হবে (ফ্রি)।";
+    $("#emailLogin").hidden = isGh;
+    $("#tokenLogin").hidden = !isGh;
   }
 
   /* ---------- dirty tracking ---------- */
@@ -127,7 +132,7 @@
 
     return '<li class="a-row' + (p.active ? "" : " is-off") + (p.inStock ? "" : " is-sold") + '" data-row="' + esc(p.id) + '">' +
       '<button type="button" class="a-thumb" data-edit="' + esc(p.id) + '" aria-label="এডিট: ' + esc(p.name.bn) + '">' +
-        (p.images[0] ? '<img src="' + esc(p.images[0]) + '" alt="" loading="lazy">' : '<span>ছবি নেই</span>') + '</button>' +
+        (p.images[0] ? '<img src="' + esc(BB.displaySrc(p.images[0])) + '" alt="" loading="lazy">' : '<span>ছবি নেই</span>') + '</button>' +
       '<div class="a-info"><p class="a-name">' + esc(p.name.bn || "(নাম নেই)") + '</p>' +
         '<p class="a-meta"><span>' + esc(catName(p.cat)) + '</span>' + pills.join("") + '</p></div>' +
       '<div class="a-price">' + price + '</div>' +
@@ -185,7 +190,7 @@
 
     var imgs = p.images.map(function (src, i) {
       return '<div class="ed-img' + (i === 0 ? " is-main" : "") + '">' +
-        '<img src="' + esc(src) + '" alt="">' +
+        '<img src="' + esc(BB.displaySrc(src)) + '" alt="">' +
         (i === 0 ? '<span class="ed-img-main">মূল ছবি</span>' : '<button type="button" class="ed-img-btn" data-img-main="' + i + '">মূল করুন</button>') +
         '<button type="button" class="ed-img-x" data-img-del="' + i + '" aria-label="ছবি মুছুন"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' +
         '</div>';
@@ -338,7 +343,7 @@
           ctx.drawImage(img, (img.naturalWidth - s) / 2, (img.naturalHeight - s) / 2, s, s, 0, 0, c.width, c.height);
         }
         URL.revokeObjectURL(url);
-        if (BB.cloudOn) c.toBlob(function (b) { b ? resolve(b) : reject(new Error("ছবি প্রসেস করা যায়নি")); }, "image/jpeg", quality);
+        if (BB.backend === "supabase") c.toBlob(function (b) { b ? resolve(b) : reject(new Error("ছবি প্রসেস করা যায়নি")); }, "image/jpeg", quality);
         else resolve(c.toDataURL("image/jpeg", quality));
       };
       img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("এই ফাইলটা ছবি হিসেবে খোলা যায়নি")); };
@@ -349,7 +354,7 @@
   // one image -> url (cloud) or data url (local)
   function imageSrc(file, size, quality, fit) {
     if (!file || !/^image\//.test(file.type)) return Promise.reject(new Error("এটা ছবির ফাইল না"));
-    return processImage(file, size, quality, fit).then(function (out) { return BB.cloudOn ? BB.uploadImage(out) : out; });
+    return processImage(file, size, quality, fit).then(function (out) { return BB.backend === "supabase" ? BB.uploadImage(out) : out; });
   }
 
   function addImages(files) {
@@ -366,7 +371,7 @@
     files.forEach(function (file, i) {
       chain = chain.then(function () {
         return processImage(file, BB.cloudOn ? 900 : 720, BB.cloudOn ? 0.86 : 0.8)
-          .then(function (out) { return BB.cloudOn ? BB.uploadImage(out) : out; })
+          .then(function (out) { return BB.backend === "supabase" ? BB.uploadImage(out) : out; })
           .then(function (src) { if (ed) ed.images.push(src); })
           .catch(function (e) { toast("ছবি যোগ হয়নি: " + (e && e.message ? e.message : "অজানা সমস্যা"), true); })
           .then(function () { pending[i].remove(); });
@@ -381,7 +386,7 @@
     var cats = s.categories.map(function (c, i) {
       var used = W.products.filter(function (p) { return p.cat === c.id; }).length;
       return '<div class="cat-row" data-ci="' + i + '">' +
-        '<label class="cat-img" title="ক্যাটাগরির ছবি বদলান">' + (c.image ? '<img src="' + esc(c.image) + '" alt="">' : '<span>ছবি</span>') +
+        '<label class="cat-img" title="ক্যাটাগরির ছবি বদলান">' + (c.image ? '<img src="' + esc(BB.displaySrc(c.image)) + '" alt="">' : '<span>ছবি</span>') +
           '<input type="file" accept="image/*" data-cat-img="' + i + '" hidden></label>' +
         '<select data-cat-icon="' + i + '" aria-label="আইকন">' + BB.ICONS.map(function (ic) {
           return '<option value="' + ic + '"' + (ic === c.icon ? " selected" : "") + '>' + ICON_NAMES[ic] + '</option>';
@@ -482,13 +487,13 @@
           '<button type="button" class="a-ic" data-bmove="1" data-bi="' + i + '" aria-label="পরে নিন"' + (i === s.banners.length - 1 ? " disabled" : "") + '><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>' +
           '<button type="button" class="a-ic" data-bdel="' + i + '" aria-label="স্লাইড মুছুন"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' +
         '</span></div>' +
-        '<div class="hb-img">' + (b.image ? '<img src="' + esc(b.image) + '" alt="">' : '<span>ছবি নেই। নিচে বাছাই করা ক্যাটাগরির পণ্যের ছবি দেখাবে।</span>') + '</div>' +
+        '<div class="hb-img">' + (b.image ? '<img src="' + esc(BB.displaySrc(b.image)) + '" alt="">' : '<span>ছবি নেই। নিচে বাছাই করা ক্যাটাগরির পণ্যের ছবি দেখাবে।</span>') + '</div>' +
         '<div class="a-btnrow">' +
           '<label class="btn btn-ghost btn-sm a-filebtn">' + (b.image ? "ছবি বদলান" : "ছবি দিন") + '<input type="file" accept="image/*" data-banner-img="' + i + '" hidden></label>' +
           (b.image ? '<button type="button" class="btn btn-line btn-sm" data-bimg-del="' + i + '">ছবি সরান</button>' : "") +
         '</div>' +
         (b.image ? '<div class="hb-mobile">' +
-          '<div class="hb-mimg">' + (b.imageMobile ? '<img src="' + esc(b.imageMobile) + '" alt="">' : '<span>নেই</span>') + '</div>' +
+          '<div class="hb-mimg">' + (b.imageMobile ? '<img src="' + esc(BB.displaySrc(b.imageMobile)) + '" alt="">' : '<span>নেই</span>') + '</div>' +
           '<div><p><b>মোবাইলের ছবি (ঐচ্ছিক)</b></p><p class="a-muted">ফোনে লেখা উপরে বসে, পণ্য নিচে দেখায়। লম্বা ছবি দিন (যেমন ৮০০×১২৫০), পণ্য নিচের দিকে আর উপরের অংশ ফাঁকা। না দিলে বড় ছবিটাই নিচে বসিয়ে দেখানো হবে।</p>' +
           '<div class="a-btnrow"><label class="btn btn-ghost btn-sm a-filebtn">' + (b.imageMobile ? "বদলান" : "ছবি দিন") + '<input type="file" accept="image/*" data-banner-mimg="' + i + '" hidden></label>' +
           (b.imageMobile ? '<button type="button" class="btn btn-line btn-sm" data-bmimg-del="' + i + '">সরান</button>' : "") +
@@ -508,7 +513,7 @@
       return '<div class="hb-card rv-card">' +
         '<div class="hb-top"><b>রিভিউ ' + bn(i + 1) + '</b><span class="hb-acts">' +
           '<button type="button" class="a-ic" data-rdel="' + i + '" aria-label="রিভিউ মুছুন"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span></div>' +
-        '<div class="rv-row"><label class="rv-photo" title="কাস্টমারের ছবি (ঐচ্ছিক)">' + (r.photo ? '<img src="' + esc(r.photo) + '" alt="">' : '<span>ছবি</span>') +
+        '<div class="rv-row"><label class="rv-photo" title="কাস্টমারের ছবি (ঐচ্ছিক)">' + (r.photo ? '<img src="' + esc(BB.displaySrc(r.photo)) + '" alt="">' : '<span>ছবি</span>') +
           '<input type="file" accept="image/*" data-rev-img="' + i + '" hidden></label>' +
           '<div class="ed-2 rv-fields">' + rf(i, "name", "নাম *", r.name) + rf(i, "location", "জায়গা", r.location, "যেমন: ঢাকা") +
           '<label class="a-field"><span>রেটিং</span><select data-r="' + i + '" data-rf="rating">' + [5, 4, 3, 2, 1].map(function (n) {
@@ -548,9 +553,15 @@
     var btn = $("#publishBtn"); btn.disabled = true; btn.textContent = "পাবলিশ হচ্ছে…";
     BB.publish(W).then(function (clean) {
       W = clean; markSaved(); BB.saveDraft(W); renderAll();
-      toast("পাবলিশ হয়েছে। সাইটে এখন নতুন তথ্য দেখাবে।");
+      toast(BB.backend === "github" ? "পাবলিশ হয়েছে। ১-২ মিনিটের মধ্যে সাইটে দেখাবে।" : "পাবলিশ হয়েছে। সাইটে এখন নতুন তথ্য দেখাবে।", true);
     }).catch(function (e) {
       var msg = (e && (e.message || e.error_description)) || "";
+      if (BB.backend === "github") {
+        if (e && e.status === 401) toast("পাবলিশ হয়নি: টোকেনের মেয়াদ শেষ বা ভুল। লগআউট করে নতুন টোকেন দিয়ে লগইন করুন।", true);
+        else if (e && (e.status === 403 || e.status === 404)) toast("পাবলিশ হয়নি: এই টোকেনে লেখার অনুমতি নেই (Contents: Read and write লাগবে)।", true);
+        else toast("পাবলিশ হয়নি: " + (msg || "ইন্টারনেট সংযোগ দেখুন"), true);
+        return;
+      }
       if (/jwt|auth|401|403|row-level|permission/i.test(msg)) toast("পাবলিশ হয়নি: লগইনের মেয়াদ শেষ বা অনুমতি নেই। আবার লগইন করুন।", true);
       else toast("পাবলিশ হয়নি: " + (msg || "ইন্টারনেট সংযোগ দেখুন") , true);
     }).then(function () {
@@ -761,11 +772,19 @@
   $("#loginForm").addEventListener("submit", function (e) {
     e.preventDefault();
     var f = e.target, err = $("#loginErr"), btn = $("#loginBtn");
-    if (!f.email.value || !f.password.value) { err.textContent = "ইমেইল আর পাসওয়ার্ড দুটোই লিখুন।"; return; }
+    var isGh = BB.backend === "github";
+    if (isGh && !f.token.value.trim()) { err.textContent = "টোকেনটা পেস্ট করুন।"; return; }
+    if (!isGh && (!f.email.value || !f.password.value)) { err.textContent = "ইমেইল আর পাসওয়ার্ড দুটোই লিখুন।"; return; }
     btn.disabled = true; btn.textContent = "লগইন হচ্ছে…"; err.textContent = "";
-    BB.signIn(f.email.value.trim(), f.password.value).then(function () { startApp(); })
+    (isGh ? BB.signInToken(f.token.value) : BB.signIn(f.email.value.trim(), f.password.value)).then(function () { f.reset(); startApp(); })
       .catch(function (e2) {
         var m = (e2 && e2.message) || "";
+        if (isGh) {
+          err.textContent = e2 && e2.status === 401 ? "টোকেনটা ভুল বা মেয়াদ শেষ।"
+            : e2 && (e2.status === 403 || e2.status === 404) ? "এই টোকেনে " + BB.github.owner + "/" + BB.github.repo + " রিপোতে অ্যাক্সেস নেই।"
+            : "লগইন হয়নি: " + (m || "ইন্টারনেট সংযোগ দেখুন");
+          return;
+        }
         err.textContent = /invalid/i.test(m) ? "ইমেইল বা পাসওয়ার্ড ভুল।" : "লগইন হয়নি: " + (m || "ইন্টারনেট সংযোগ দেখুন");
       })
       .then(function () { btn.disabled = false; btn.textContent = "লগইন করুন"; });
@@ -778,7 +797,7 @@
     BB.loadForAdmin().then(function (res) {
       if (BB.cloudOn) {
         W = res.data; markSaved(); BB.saveDraft(W);
-        if (res.source === "defaults") toast("ক্লাউডে এখনো কিছু নেই। config.js এর পণ্যগুলো দেখানো হচ্ছে, একবার পাবলিশ করলেই ক্লাউডে উঠে যাবে।", true);
+        if (res.source === "defaults" && BB.backend !== "github") toast("ক্লাউডে এখনো কিছু নেই। config.js এর পণ্যগুলো দেখানো হচ্ছে, একবার পাবলিশ করলেই ক্লাউডে উঠে যাবে।", true);
       } else {
         savedSnap = JSON.stringify(BB.normalize(null));   // what's deployed in config.js
         W = res.data;
@@ -797,7 +816,7 @@
     show("loadView"); $("#loadText").textContent = "সংযোগ হচ্ছে…"; $("#retryBtn").hidden = true;
     BB.getSession().then(function (s) { if (s) startApp(); else show("loginView"); })
       .catch(function (e) {
-        $("#loadText").textContent = "ক্লাউডে সংযোগ হয়নি: " + ((e && e.message) || "ইন্টারনেট সংযোগ দেখুন");
+        $("#loadText").textContent = "সংযোগ হয়নি: " + ((e && e.message) || "ইন্টারনেট সংযোগ দেখুন");
         $("#retryBtn").hidden = false;
       });
   }
