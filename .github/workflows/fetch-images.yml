@@ -1,0 +1,32 @@
+name: Fetch product photos
+on:
+  push:
+    paths: ['.github/fetch-images.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download photos from the shop catalog
+        run: |
+          mkdir -p images/fb
+          # wake the server first (free hosting sleeps)
+          curl -s --max-time 90 -o /dev/null https://blushing-beauty-bot.onrender.com/ || true
+          while read -r id; do
+            [ -z "$id" ] && continue
+            for t in 1 2 3 4; do
+              curl -fsSL --max-time 60 -o "images/fb/$id.jpg" "https://blushing-beauty-bot.onrender.com/img/$id.jpg" && break
+              sleep 15
+            done
+          done < .github/fetch-images.txt
+          ls -la images/fb
+      - name: Save them in the repo
+        run: |
+          git config user.name "Blushing Beauty"
+          git config user.email "blushingbeautybd@users.noreply.github.com"
+          git add images/fb
+          git commit -m "Add product photos from the shop catalog" || exit 0
+          git push
