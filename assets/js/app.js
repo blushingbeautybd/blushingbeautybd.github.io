@@ -62,13 +62,13 @@
       "cart.fine": "WhatsApp opens with your full order already written. Just tap Send.",
       "cart.remove": "Remove",
       "err.name": "Enter your name.", "err.phone": "Enter an 11-digit mobile number, like 01712345678.", "err.address": "Enter your full delivery address.",
-      "pd.option": "Pack", "pd.size": "Size", "pd.qty": "Quantity",
-      "pd.note": "Colour or design preference (optional)", "pd.notePh": "e.g. black and pink",
+      "pd.option": "Pack", "pd.size": "Size", "pd.qty": "Quantity", "pd.color": "Colour / Design",
+      "pd.note": "Colour or design preference (optional)", "pd.notePh": "e.g. black and pink", "pd.noteOnly": "Note (optional)", "pd.noteOnlyPh": "Anything we should know", "pd.notePackPh": "e.g. 2nd piece in another colour",
       "pd.add": "Add to Cart", "pd.buy": "Buy Now",
       "pd.ask": "Ask price on WhatsApp", "pd.askNote": "Price and stock for this item are shared on WhatsApp.",
       "pd.soldNote": "This item is sold out right now. Message us to find out when it's back.",
       "pd.soldAsk": "Ask when it's back",
-      "pd.pickSize": "Choose a size first.", "pd.sizeHelp": "Size guide",
+      "pd.pickSize": "Choose a size first.", "pd.pickColor": "Choose a colour first.", "card.colors": "{n} colours", "pd.sizeHelp": "Size guide",
       "pd.trustDel": "৳{in} inside Dhaka, ৳{out} outside", "pd.trustCod": "Cash on delivery", "pd.trustHelp": "Help with sizing",
       "card.add": "Add to Cart", "card.ask": "Ask Price", "card.askPrice": "Ask for price", "card.sold": "Sold out",
       "badge.new": "New", "badge.hot": "Hot", "badge.offer": "Offer", "badge.sold": "Sold out",
@@ -137,13 +137,13 @@
       "cart.fine": "বাটন চাপলে WhatsApp খুলবে, অর্ডারের সব তথ্য লেখা থাকবে। শুধু Send চাপুন।",
       "cart.remove": "সরিয়ে দিন",
       "err.name": "আপনার নাম লিখুন।", "err.phone": "১১ সংখ্যার মোবাইল নম্বর লিখুন, যেমন 01712345678।", "err.address": "ডেলিভারির পুরো ঠিকানা লিখুন।",
-      "pd.option": "প্যাক", "pd.size": "সাইজ", "pd.qty": "পরিমাণ",
-      "pd.note": "কালার বা ডিজাইন পছন্দ (ঐচ্ছিক)", "pd.notePh": "যেমন: কালো আর পিংক",
+      "pd.option": "প্যাক", "pd.size": "সাইজ", "pd.qty": "পরিমাণ", "pd.color": "রং / ডিজাইন",
+      "pd.note": "কালার বা ডিজাইন পছন্দ (ঐচ্ছিক)", "pd.notePh": "যেমন: কালো আর পিংক", "pd.noteOnly": "নোট (ঐচ্ছিক)", "pd.noteOnlyPh": "আর কিছু জানাতে চাইলে লিখুন", "pd.notePackPh": "যেমন: ২য় পিসটা অন্য রঙে চাই",
       "pd.add": "কার্টে যোগ করুন", "pd.buy": "এখনই কিনুন",
       "pd.ask": "WhatsApp এ দাম জানুন", "pd.askNote": "এই পণ্যের দাম ও স্টক WhatsApp এ জানিয়ে দেওয়া হয়।",
       "pd.soldNote": "এই পণ্যটি এখন স্টকে নেই। আবার কবে আসবে জানতে WhatsApp করুন।",
       "pd.soldAsk": "স্টক কবে আসবে জানুন",
-      "pd.pickSize": "আগে একটা সাইজ বেছে নিন।", "pd.sizeHelp": "সাইজ গাইড",
+      "pd.pickSize": "আগে একটা সাইজ বেছে নিন।", "pd.pickColor": "আগে একটা রং বেছে নিন।", "card.colors": "{n}টি রং", "pd.sizeHelp": "সাইজ গাইড",
       "pd.trustDel": "ঢাকায় ৳{in}, বাইরে ৳{out}", "pd.trustCod": "ক্যাশ অন ডেলিভারি", "pd.trustHelp": "সাইজ নিয়ে সাহায্য",
       "card.add": "কার্টে যোগ করুন", "card.ask": "দাম জানুন", "card.askPrice": "দাম জানতে মেসেজ করুন", "card.sold": "স্টক শেষ",
       "badge.new": "নতুন", "badge.hot": "হট", "badge.offer": "অফার", "badge.sold": "স্টক শেষ",
@@ -212,6 +212,14 @@
   function shownPrice(p) { return p.options[0].price != null ? p.options[0].price : minPrice(p); }
   function sizesOf(p) { return p.sizes === "bra" ? SHOP.braSizes : (Array.isArray(p.sizes) ? p.sizes : null); }
   function canOrder(p) { return p.inStock && minPrice(p) != null; }
+  // "Combo Offers" also lists every product sold in packs (e.g. 1 piece / 3 pieces)
+  function isPack(p) { return p.options.filter(function (o) { return o.price != null; }).length > 1; }
+  function inCat(p, id) { return p.cat === id || (id === "combo" && isPack(p)); }
+  function colorsOf(p) { return p.colors && p.colors.length ? p.colors : null; }
+  var SWATCH = { black: "#1E1A1C", white: "#F8F5F0", pink: "#EE8DB1", maroon: "#6B1A2E", red: "#C62233", blue: "#3E5FA6",
+    olive: "#7C7A3E", nude: "#E3BC9C", green: "#9DBBA2", "bottle green": "#14523A", purple: "#7B4BA0", brown: "#7A4A32", peach: "#F4B08A" };
+  function swatch(c) { return SWATCH[String(c.en || "").trim().toLowerCase()] || ""; }
+  function sameColor(a, b) { return (!a && !b) || (a && b && a.bn === b.bn); }
   function catOf(id) { return CATS.filter(function (x) { return x.id === id; })[0]; }
   function catLabel(id) { var c = catOf(id); return c ? L(c.label) : ""; }
   function nameBn(p) { return p.name.bn || p.name.en; }
@@ -287,7 +295,7 @@
 
   function collageList(b) {
     if (!b.collage) return [];
-    var list = PRODUCTS.filter(function (p) { return p.cat === b.collage && p.images.length; });
+    var list = PRODUCTS.filter(function (p) { return inCat(p, b.collage) && p.images.length; });
     list.sort(function (a, c) { return (canOrder(a) ? 0 : 1) - (canOrder(c) ? 0 : 1); });
     return list.slice(0, 3);
   }
@@ -370,7 +378,7 @@
   /* ---------- header: dropdown, mobile drawer, scrollspy ---------- */
   function renderDrop() {
     $("#shopDrop").innerHTML = '<a href="#shop" data-goto-cat="all">' + t("nav.all") + '</a>' + CATS.map(function (c) {
-      var n = PRODUCTS.filter(function (p) { return p.cat === c.id; }).length;
+      var n = PRODUCTS.filter(function (p) { return inCat(p, c.id); }).length;
       if (!n) return "";
       return '<a href="#shop" data-goto-cat="' + esc(c.id) + '"><span class="drop-ico">' + (ICON[c.icon] || ICON.bow) + '</span>' + esc(L(c.label)) + '<small>' + digits(n) + '</small></a>';
     }).join("");
@@ -400,7 +408,7 @@
   /* ---------- collections ---------- */
   function renderTiles() {
     var html = CATS.map(function (c) {
-      var list = PRODUCTS.filter(function (p) { return p.cat === c.id; });
+      var list = PRODUCTS.filter(function (p) { return inCat(p, c.id); });
       if (!list.length) return "";
       var img = c.image || ((list.filter(function (p) { return p.images.length; })[0] || {}).images || ["images/logo.webp"])[0];
       return '<button type="button" class="cat-tile" data-goto-cat="' + esc(c.id) + '">' +
@@ -447,9 +455,17 @@
         '<p class="pc-cat">' + esc(catLabel(p.cat)) + '</p>' +
         '<h3 class="pc-name"><button type="button" data-open="' + esc(p.id) + '">' + esc(L(p.name)) + '</button></h3>' +
         priceHtml(p) +
+        colorDots(p) +
         (L(p.note) ? '<p class="pc-note">' + esc(L(p.note)) + '</p>' : "") +
         btn +
       '</div></article>';
+  }
+
+  function colorDots(p) {
+    var cs = colorsOf(p); if (!cs) return "";
+    var dots = cs.map(swatch).filter(Boolean).slice(0, 6);
+    return '<p class="pc-colors">' + dots.map(function (c) { return '<i style="--c:' + c + '"></i>'; }).join("") +
+      '<span>' + t("card.colors", { n: digits(cs.length) }) + '</span></p>';
   }
 
   function renderOffers() {
@@ -462,7 +478,7 @@
   function renderChips() {
     var all = [{ id: "all", label: { bn: T.bn["cat.all"], en: T.en["cat.all"] } }].concat(CATS);
     $("#chips").innerHTML = all.map(function (c) {
-      var count = c.id === "all" ? PRODUCTS.length : PRODUCTS.filter(function (p) { return p.cat === c.id; }).length;
+      var count = c.id === "all" ? PRODUCTS.length : PRODUCTS.filter(function (p) { return inCat(p, c.id); }).length;
       if (!count) return "";
       return '<button type="button" role="tab" class="chip" data-cat="' + esc(c.id) + '" aria-selected="' + (state.cat === c.id) + '">' +
         esc(L(c.label)) + ' <span class="chip-n">' + digits(count) + '</span></button>';
@@ -475,7 +491,7 @@
     return q.toLowerCase().split(/\s+/).filter(Boolean).every(function (w) { return hay.indexOf(w) >= 0; });
   }
   function filtered() {
-    var list = PRODUCTS.filter(function (p) { return (state.cat === "all" || p.cat === state.cat) && matches(p, state.q); });
+    var list = PRODUCTS.filter(function (p) { return (state.cat === "all" || inCat(p, state.cat)) && matches(p, state.q); });
     if (state.sort !== "default") {
       var dir = state.sort === "low" ? 1 : -1;
       list = list.slice().sort(function (a, b) {
@@ -569,7 +585,7 @@
     var p = findProduct(pid); if (!p) return;
     if (!keep || !currentPd || currentPd.pid !== pid) {
       var firstPriced = p.options.filter(function (o) { return o.price != null; })[0] || p.options[0];
-      currentPd = { pid: pid, oid: firstPriced.id, size: null, qty: 1, note: "", img: 0 };
+      currentPd = { pid: pid, oid: firstPriced.id, size: null, color: null, qty: 1, note: "", img: 0 };
     }
     var s = currentPd;
     var imgs = p.images.length ? p.images : ["images/logo.webp"];
@@ -600,6 +616,15 @@
             esc(L(o.label)) + (o.price != null ? ' <span>' + money(o.price) + '</span>' : "") + '</button>';
         }).join("") + '</div></fieldset>' : "";
 
+    var colors = colorsOf(p);
+    var colorRow = (orderable && colors)
+      ? '<fieldset class="pd-field"><legend>' + t("pd.color") + '</legend><div class="seg seg-color">' +
+        colors.map(function (c, i) {
+          var sw = swatch(c);
+          return '<button type="button" class="seg-btn" data-color="' + i + '" aria-pressed="' + sameColor(c, s.color) + '">' +
+            (sw ? '<i class="sw" style="--c:' + sw + '"></i>' : "") + esc(L(c)) + '</button>';
+        }).join("") + '</div><p class="pd-err" id="pdErrColor" role="alert"></p></fieldset>' : "";
+
     var sizeRow = (orderable && sizes)
       ? '<fieldset class="pd-field"><legend>' + t("pd.size") +
         ' <a href="#size" class="pd-sizehelp" data-close-pd>' + t("pd.sizeHelp") + '</a></legend><div class="seg seg-size">' +
@@ -611,8 +636,8 @@
       ? '<div class="pd-field pd-row"><span class="pd-label">' + t("pd.qty") + '</span>' +
         '<div class="qty"><button type="button" data-qty="-1" aria-label="' + t("qty.minus") + '">−</button><output>' + digits(s.qty) + '</output>' +
         '<button type="button" data-qty="1" aria-label="' + t("qty.plus") + '">+</button></div></div>' +
-        '<label class="pd-field"><span class="pd-label">' + t("pd.note") + '</span>' +
-        '<input type="text" id="pdNote" maxlength="80" placeholder="' + esc(t("pd.notePh")) + '" value="' + esc(s.note) + '"></label>'
+        '<label class="pd-field"><span class="pd-label">' + t(colors ? "pd.noteOnly" : "pd.note") + '</span>' +
+        '<input type="text" id="pdNote" maxlength="80" placeholder="' + esc(t(colors ? (isPack(p) ? "pd.notePackPh" : "pd.noteOnlyPh") : "pd.notePh")) + '" value="' + esc(s.note) + '"></label>'
       : "";
 
     var actions = !p.inStock
@@ -632,7 +657,7 @@
     $("#pdBody").innerHTML = gallery +
       '<div class="pd-info"><div class="pd-top"><p class="pd-cat">' + esc(catLabel(p.cat)) + '</p>' + wishBtn(p, "pd-wish") + '</div>' +
       '<h2 id="pdName">' + esc(L(p.name)) + '</h2>' + priceRow +
-      (L(p.desc) ? '<p class="pd-desc">' + esc(L(p.desc)) + '</p>' : "") + optRow + sizeRow + qtyRow + actions + trust + '</div>';
+      (L(p.desc) ? '<p class="pd-desc">' + esc(L(p.desc)) + '</p>' : "") + optRow + colorRow + sizeRow + qtyRow + actions + trust + '</div>';
 
     var slides = $("#pdSlides");
     if (slides) {
@@ -655,17 +680,22 @@
   }
   function pdLine() {
     var p = findProduct(currentPd.pid);
+    if (colorsOf(p) && !currentPd.color) {
+      var ec = $("#pdErrColor"); if (ec) ec.textContent = t("pd.pickColor");
+      var fc = $(".seg-color .seg-btn"); if (fc) fc.focus();
+      return null;
+    }
     if (sizesOf(p) && !currentPd.size) {
       var e = $("#pdErr"); if (e) e.textContent = t("pd.pickSize");
       var first = $(".seg-size .seg-btn"); if (first) first.focus();
       return null;
     }
     var note = ($("#pdNote") || {}).value || "";
-    return { pid: p.id, oid: currentPd.oid, size: currentPd.size, qty: currentPd.qty, note: note.trim() };
+    return { pid: p.id, oid: currentPd.oid, size: currentPd.size, color: currentPd.color, qty: currentPd.qty, note: note.trim() };
   }
   function addLine(line) {
     var same = state.cart.filter(function (l) {
-      return l.pid === line.pid && l.oid === line.oid && l.size === line.size && l.note === line.note;
+      return l.pid === line.pid && l.oid === line.oid && l.size === line.size && sameColor(l.color, line.color) && l.note === line.note;
     })[0];
     if (same) same.qty = Math.min(20, same.qty + line.qty); else state.cart.push(line);
     saveCart();
@@ -703,6 +733,7 @@
       var info = lineInfo(l);
       var meta = [];
       if (info.p.options.length > 1) meta.push(L(info.o.label));
+      if (l.color) meta.push(L(l.color));
       if (l.size) meta.push(t("pd.size") + " " + digits(l.size));
       if (l.note) meta.push(l.note);
       return '<li class="line">' +
@@ -752,6 +783,7 @@
     var info = lineInfo(l);
     var parts = [nameBn(info.p)];
     if (info.p.options.length > 1) parts.push(info.o.label.bn || info.o.label.en);
+    if (l.color) parts.push("রং " + (l.color.bn || l.color.en));
     if (l.size) parts.push("সাইজ " + toBn(l.size));
     var s = toBn(i + 1) + ") " + parts.join(", ") + "\n   পরিমাণ " + toBn(l.qty) + " × " + moneyBn(info.o.price) + " = " + moneyBn(info.total);
     if (l.note) s += "\n   নোট: " + l.note;
@@ -839,6 +871,12 @@
       var keepNote = function () { currentPd.note = ($("#pdNote") || {}).value || currentPd.note; };
       if ((el = e.target.closest("[data-oid]"))) { keepNote(); currentPd.oid = el.dataset.oid; renderPd(currentPd.pid, true); return; }
       if ((el = e.target.closest("[data-size]"))) { keepNote(); currentPd.size = el.dataset.size; renderPd(currentPd.pid, true); return; }
+      if ((el = e.target.closest("[data-color]"))) {
+        keepNote();
+        var pc = colorsOf(findProduct(currentPd.pid)) || [];
+        var cc = pc[+el.dataset.color]; currentPd.color = cc ? { bn: cc.bn, en: cc.en } : null;
+        renderPd(currentPd.pid, true); return;
+      }
       if ((el = e.target.closest("[data-img]"))) {
         var sl = $("#pdSlides"); if (sl) sl.scrollTo({ left: (+el.dataset.img) * sl.clientWidth, behavior: reduceMotion ? "auto" : "smooth" });
         return;

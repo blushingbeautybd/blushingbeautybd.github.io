@@ -72,6 +72,11 @@
       name: bl(p.name), desc: bl(p.desc), note: bl(p.note),
       options: opts.map(normOption),
       sizes: sizes && sizes.length ? sizes : (sizes === "bra" ? "bra" : null),
+      colors: (Array.isArray(p.colors) ? p.colors : []).map(function (c) {
+        c = typeof c === "string" ? { bn: c, en: c } : bl(c);
+        if (!c.bn) c.bn = c.en; if (!c.en) c.en = c.bn;
+        return c;
+      }).filter(function (c) { return c.bn; }),
       featured: !!p.featured,
       active: p.active !== false,
       inStock: p.inStock !== false,

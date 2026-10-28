@@ -250,6 +250,14 @@
           '<input name="sizes_custom" value="' + esc(sm === "custom" ? p.sizes.join(", ") : "") + '" placeholder="M, L, XL, XXL"></label>' +
       '</section>' +
 
+      '<section class="ed-sec"><h3>রং / ডিজাইন</h3>' +
+        '<p class="a-muted">কাস্টমার অর্ডারের সময় এখান থেকে রং বেছে নেবে। কমা দিয়ে লিখুন। রং না থাকলে খালি রাখুন।</p>' +
+        '<div class="ed-2">' +
+          '<label class="a-field"><span>রং (বাংলা)</span><input name="colors_bn" value="' + esc((p.colors || []).map(function (c) { return c.bn; }).join(", ")) + '" placeholder="যেমন: কালো, সাদা, মেরুন"></label>' +
+          '<label class="a-field"><span>Colours (English)</span><input name="colors_en" value="' + esc((p.colors || []).map(function (c) { return c.en; }).join(", ")) + '" placeholder="e.g. Black, White, Maroon"></label>' +
+        '</div>' +
+      '</section>' +
+
       '<section class="ed-sec"><h3>দেখানো</h3>' +
         '<label class="a-field"><span>ব্যাজ</span><select name="badge">' +
           '<option value=""' + (!p.badge ? " selected" : "") + '>কোনো ব্যাজ নেই</option>' +
@@ -284,6 +292,9 @@
     ed.sizes = mode === "bra" ? "bra" : mode === "custom"
       ? f.sizes_custom.value.split(/[,，]/).map(function (s) { return s.trim(); }).filter(Boolean)
       : null;
+    var cbn = f.colors_bn.value.split(/[,，]/).map(function (s) { return s.trim(); }).filter(Boolean);
+    var cen = f.colors_en.value.split(/[,，]/).map(function (s) { return s.trim(); });
+    ed.colors = cbn.map(function (c, i) { return { bn: c, en: cen[i] || c }; });
     $all(".ed-opt", f).forEach(function (row) {
       var o = ed.options[+row.dataset.oi];
       o.label = { bn: row.querySelector('[data-o="label.bn"]').value.trim(), en: row.querySelector('[data-o="label.en"]').value.trim() };

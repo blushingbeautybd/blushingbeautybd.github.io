@@ -360,6 +360,9 @@ html[lang="bn"] .pc-cat { letter-spacing: .02em; font-size: 12.5px; }
 .pc-price s { font-family: var(--f-sans); font-weight: 400; font-size: 13px; color: var(--muted); margin-left: 4px; }
 .pc-price.is-muted { font-family: var(--f-sans); font-size: 13px; font-weight: 500; color: var(--muted); }
 .pc-note { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.pc-colors { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); line-height: 1.2; }
+.pc-colors i { width: 11px; height: 11px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(53,17,16,.18); flex: none; }
+.pc-colors span { margin-left: 3px; }
 .pc-body > .btn { margin-top: auto; width: 100%; }
 .pc-body > p:last-of-type { margin-bottom: 10px; }
 @media (max-width: 420px) {
@@ -605,6 +608,9 @@ body:has(.cart-bar:not([hidden])) .wa-float { bottom: 88px; }
 .seg-btn span { color: var(--muted); margin-left: 4px; }
 .seg-btn[aria-pressed="true"] { background: var(--berry); border-color: var(--berry); color: #fff; }
 .seg-btn[aria-pressed="true"] span { color: #F6D5DE; }
+.seg-color .seg-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; }
+.seg-btn .sw { width: 14px; height: 14px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(53,17,16,.2); flex: none; }
+.seg-btn[aria-pressed="true"] .sw { box-shadow: 0 0 0 2px #fff; }
 .qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; background: #fff; }
 .qty button { width: 40px; height: 40px; border: 0; background: none; font-size: 19px; line-height: 1; border-radius: 50%; }
 .qty output { min-width: 26px; text-align: center; font-weight: 600; }
